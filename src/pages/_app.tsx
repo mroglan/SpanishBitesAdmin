@@ -10,8 +10,8 @@ export const theme = createMuiTheme({
   palette: {
     primary: {
       main: 'hsl(50, 100%, 98%)',
-      dark: amber[400],
-      light: amber[50]
+      dark: amber[300],
+      light: amber[100]
     },
     secondary: {
       main: 'hsl(229, 100%, 58%)',
