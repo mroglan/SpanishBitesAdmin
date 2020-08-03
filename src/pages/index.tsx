@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Header from '../components/nav/Header'
 
 export default function Home() {
 
@@ -10,7 +11,7 @@ export default function Home() {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    header
+                    <Header />
                 </header>
                 <aside className={styles.sideBar}>
                     side-bar
