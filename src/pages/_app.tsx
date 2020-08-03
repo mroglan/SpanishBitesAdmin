@@ -9,9 +9,9 @@ import React from 'react';
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: amber[500],
+      main: amber[400],
       dark: amber[700],
-      light: amber[300]
+      light: amber[200]
     },
     secondary: {
       main: '#122375',
@@ -27,7 +27,7 @@ export const theme = createMuiTheme({
       light: 'hsl(140, 81%, 40%)'
     },
     background: {
-      default: amber[200],
+      default: amber[100],
       paper: '#fff'
     },
 
