@@ -9,14 +9,14 @@ import React from 'react';
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: amber[400],
-      dark: amber[700],
-      light: amber[200]
+      main: 'hsl(50, 100%, 98%)',
+      dark: amber[400],
+      light: amber[50]
     },
     secondary: {
-      main: '#122375',
-      dark: '#0c1851',
-      light: '#414f90'
+      main: 'hsl(229, 100%, 58%)',
+      dark: 'hsl(229, 100%, 35%)',
+      light: 'hsl(229, 100%, 81%)'
     },
     error: {
       main: red.A400,
@@ -27,7 +27,7 @@ export const theme = createMuiTheme({
       light: 'hsl(140, 81%, 40%)'
     },
     background: {
-      default: amber[100],
+      default: 'hsl(50, 100%, 97%)',
       paper: '#fff'
     },
 
