@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     },
     appbar: {
         background: theme.palette.primary.main,
-        color: '#fff8e1'
+        color: '#000'
     },
     logo: {
         height: 40,
@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '50%',
         display: 'grid',
         placeItems: 'center',
-        border: '1px solid #fff'
+        border: '1px solid ' + theme.palette.secondary.main,
+        color: theme.palette.secondary.main
     }
 }))
 
