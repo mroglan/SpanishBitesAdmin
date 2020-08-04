@@ -19,10 +19,12 @@ export const theme = createMuiTheme({
       light: 'hsl(229, 100%, 81%)'
     },
     error: {
-      main: red.A400,
-      light: 'hsla(348, 91%, 55%, .9)'
+      main: 'hsl(356, 81%, 49%)',
+      light: 'hsl(356, 81%, 59%)',
+      dark: 'hsl(356, 81%, 39%)'
     },
     success: {
+      dark: 'hsl(140, 81%, 22%)',
       main: 'hsl(140, 81%, 31%)',
       light: 'hsl(140, 81%, 40%)'
     },
