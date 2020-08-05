@@ -3,15 +3,12 @@ import {makeStyles} from '@material-ui/core/styles'
 import EditIcon from '@material-ui/icons/Edit';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import {WarningIconButton, ErrorIconButton} from './buttons'
+import {useMemo} from 'react'
 
 const useStyles = makeStyles(theme => ({
     listItem: {
         padding: theme.spacing(1),
     },
-    text: {
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis'
-    }
 }))
 
 interface Props {
@@ -25,21 +22,28 @@ interface Props {
 
 export default function EditList({items, onEditClick, onDeleteClick}:Props) {
 
+    const shortenedItems = useMemo(() => items.map(item => {
+        return {
+            title: item.title.length > 20 ? item.title.substring(0, 17) + '...' : item.title,
+            subtitle: item.subtitle.length > 30 ? item.subtitle.substring(0, 27) + '...' : item.subtitle
+        }
+    }), [items])
+    
     const classes = useStyles()
     return (
         <Box>
             <List>
-                {items.map(({title, subtitle}, i) => (
+                {shortenedItems.map(({title, subtitle}, i) => (
                     <ListItem className={`${classes.listItem}`} key={i}>
-                        <Grid container alignItems="center" justify="space-between" wrap="nowrap">
-                            <Grid item>
+                        <Grid container alignItems="center" wrap="nowrap">
+                            <Grid item style={{flexGrow: 1}}>
                                 <Box>
-                                    <Typography variant="h6" className={classes.text}>
+                                    <Typography variant="h6">
                                         {title}
                                     </Typography>
                                 </Box>
                                 <Box>
-                                    <Typography variant="caption" className={classes.text}>
+                                    <Typography variant="caption">
                                         {subtitle}
                                     </Typography>
                                 </Box>
