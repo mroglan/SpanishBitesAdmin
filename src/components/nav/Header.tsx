@@ -1,5 +1,7 @@
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar, Toolbar, Typography, Box, Grid} from '@material-ui/core'
+import {useMediaQuery} from '@material-ui/core'
+import {AppBar, Toolbar, Typography, Box, Grid, Button} from '@material-ui/core'
+import DrawerNav from './DrawerNav'
 
 const useStyles = makeStyles(theme => ({
     toolbar: {
@@ -17,22 +19,33 @@ const useStyles = makeStyles(theme => ({
         placeItems: 'center',
         border: '1px solid ' + theme.palette.secondary.main,
         color: theme.palette.secondary.main
+    },
+    title: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none'
+        }
     }
 }))
 
-export default function Header() {
+interface Props {
+    selectedIndex: number;
+}
+
+export default function Header({selectedIndex}:Props) {
+
+    const smallScreen = useMediaQuery('(max-width:960px)')
 
     const classes = useStyles()
     return (
         <AppBar className={classes.appbar} position="sticky">
             <Toolbar className={classes.toolbar}>
-                <Grid container spacing={1} alignItems="center">
+                <Grid container spacing={1} wrap="nowrap" alignItems="center">
                     <Grid item>
                         <div className={classes.logo}>
                             Logo
                         </div>
                     </Grid>
-                    <Grid item>
+                    <Grid className={classes.title} item>
                         <Typography variant="h5">
                             Spanish Bites Admin
                         </Typography>
@@ -40,9 +53,9 @@ export default function Header() {
                 </Grid>
                 <Box flexGrow={1} />
                 <Box>
-                    <Typography variant="button">
+                    {smallScreen ? <DrawerNav selectedIndex={selectedIndex} /> : <Button><Typography variant="button">
                         Logout
-                    </Typography>
+                    </Typography></Button>}
                 </Box>
             </Toolbar>
         </AppBar>

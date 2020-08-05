@@ -1,5 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 import {Box, List, ListItem, ListItemText, Typography} from '@material-ui/core'
+import Router from 'next/router'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,46 +18,48 @@ const useStyles = makeStyles(theme => ({
         },
         '&:hover > div': {
             borderLeft: `3px solid ${theme.palette.secondary.main}`
+        },
+        '&$selectedItem': {
+            background: theme.palette.secondary.light,
+            boxShadow: `0px 1px 3px ${theme.palette.secondary.main}`
         }
     },
+    selectedItem: {}
 }))
 
-export default function SideBar() {
+const menuItems = [
+    {name: 'Time Periods', link: '/timeperiods'},
+    {name: 'Authors', link: '/authors'},
+    {name: 'Books', link: '/books'},
+    {name: 'Passages', link: '/passages'}
+]
+
+interface Props {
+    selectedIndex: number;
+}
+
+export default function SideBar({selectedIndex}:Props) {
+
+    const redirect = (url:string) => {
+        Router.push({
+            pathname: url
+        })
+    }
     
     const classes = useStyles()
     return (
         <Box className={classes.root}>
             <List component="nav" aria-label="Admin navigation">
-                <ListItem className={classes.listItem} button>
-                    <Box>
-                    <ListItemText primary={
+                {menuItems.map((item, i) => (
+                    <ListItem className={`${classes.listItem} ${selectedIndex === i ? classes.selectedItem : ''}`} 
+                    key={i} button onClick={() => redirect(item.link)}>
                         <Box>
-                            <Typography variant="body1">Time Periods</Typography>
+                            <ListItemText primary={<Box>
+                                <Typography variant="body1">{item.name}</Typography>
+                            </Box>} />
                         </Box>
-                    } />
-                    </Box>
-                </ListItem>
-                <ListItem className={classes.listItem} button>
-                    <ListItemText primary={
-                        <Box>
-                            <Typography variant="body1">Authors</Typography>
-                        </Box>
-                    } />
-                </ListItem>
-                <ListItem className={classes.listItem} button>
-                    <ListItemText primary={
-                        <Box>
-                            <Typography variant="body1">Books</Typography>
-                        </Box>
-                    } />
-                </ListItem>
-                <ListItem className={classes.listItem} button>
-                    <ListItemText primary={
-                        <Box>
-                            <Typography variant="body1">Passages</Typography>
-                        </Box>
-                    } />
-                </ListItem>
+                    </ListItem>
+                ))}
             </List>
         </Box>
     )
