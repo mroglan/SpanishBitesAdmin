@@ -16,10 +16,10 @@ export default function Home() {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header />
+                    <Header selectedIndex={-1} />
                 </header>
                 <aside className={styles.sideBar}>
-                    <SideBar />
+                    <SideBar selectedIndex={-1} />
                 </aside>
                 <main className={styles.main}>
                     <Box>
