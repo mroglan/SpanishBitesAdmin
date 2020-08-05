@@ -5,6 +5,13 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import App from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import axios from 'axios'
+import {SWRConfig} from 'swr'
+
+axios.defaults.baseURL = process.env.BASE_URL
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
+const fetcher = (url:string) => axios.get(url).then(response => response.data)
 
 export const theme = createMuiTheme({
   palette: {
@@ -66,7 +73,9 @@ export default class MyApp extends App {
                 height: .2rem
               }
             `}</style>
-            <Component {...pageProps} />
+            <SWRConfig value={{fetcher}}>
+              <Component {...pageProps} />
+            </SWRConfig>
         </ThemeProvider>
       </React.Fragment>
     );
