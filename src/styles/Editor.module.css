@@ -3,8 +3,8 @@
     display: grid;
     min-height: 100%;
     grid-template: auto auto 1fr / 1fr 1fr;
-    margin-left: 1.5rem;
-    gap: 2rem 3rem;
+    margin: 0 1.5rem;
+    gap: 2rem 2rem;
 }
 
 .titleSection {
