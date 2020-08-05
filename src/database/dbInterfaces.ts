@@ -13,11 +13,12 @@ export interface ClientGenre extends Genre {
 }
 
 
-interface Event {
+export interface Event {
     title: string;
     desc: string;
     location: string;
     image: string;
+    date: string; // make Date in database
 }
 
 interface TimePeriod {
