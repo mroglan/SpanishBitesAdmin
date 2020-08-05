@@ -3,7 +3,7 @@
     display: grid;
     min-height: 100%;
     grid-template: auto auto 1fr / 1fr 1fr;
-    margin: 0 1.5rem;
+    margin: 0 1.5rem 1.5rem 1.5rem;
     gap: 2rem 2rem;
 }
 
