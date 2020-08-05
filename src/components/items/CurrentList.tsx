@@ -7,7 +7,10 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
     },
     selected: {
-
+        background: theme.palette.secondary.light,
+        '&:hover': {
+            background: theme.palette.secondary.light
+        }
     },
     text: {
         textOverflow: 'ellipsis',
