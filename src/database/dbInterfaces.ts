@@ -18,10 +18,10 @@ export interface Event {
     desc: string;
     location: string;
     image: string;
-    date: string; // make Date in database
+    date: string; 
 }
 
-interface TimePeriod {
+export interface TimePeriod {
     name: string;
     dateRange: string[]; // beginning and end date
     spainEvents: Event[];
