@@ -1,17 +1,5 @@
 import {ObjectId} from 'mongodb'
 
-interface Genre {
-    name: string;
-}
-
-export interface DBGenre extends Genre {
-    _id: ObjectId;
-}
-
-export interface ClientGenre extends Genre {
-    _id: string;
-}
-
 
 export interface Event {
     title: string;
@@ -73,6 +61,19 @@ interface DBQueryAuthor extends Omit<DBAuthor, 'timePeriod'> {
 
 interface ClientQueryAuthor extends Omit<ClientAuthor, 'timePeriod'> {
     timePeriod: string;
+}
+
+
+export interface Genre {
+    name: string;
+}
+
+export interface ClientGenre extends Genre {
+    _id: string;
+}
+
+export interface DBGenre extends Genre {
+    _id: ObjectId;
 }
 
 
