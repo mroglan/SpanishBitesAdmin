@@ -3,7 +3,6 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllTimePeriods} from '../../utils/timePeriods'
 import {ClientTimePeriod} from '../../database/dbInterfaces'
 
-import {} from '@material-ui/core'
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
 import SideBar from '../../components/nav/SideBar'

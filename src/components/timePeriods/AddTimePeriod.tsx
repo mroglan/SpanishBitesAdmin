@@ -54,7 +54,7 @@ export default function AddTimePeriod({periods}:Props) {
         setLoading(false)
 
         if(status !== 200) {
-            setMessage({type: 'error', content: 'Error saving'})
+            setMessage({type: 'error', content: 'Error Saving'})
             return
         }
         setMessage({type: 'success', content: 'Time Period Created'})
