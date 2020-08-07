@@ -39,32 +39,32 @@ export interface ClientTimePeriod extends TimePeriod {
 
 interface AuthorInfluence {
     name: string;
-    link?: string;
+    link: string;
 }
 
 interface RelevantWork extends AuthorInfluence {}
 
-interface Author {
+export interface Reference extends AuthorInfluence {}
+
+export interface Author {
     firstName: string;
     lastName: string;
     keyPoints: string[];
     relevantWorks: RelevantWork[];
     influences: AuthorInfluence[];
+    birthDate: string;
+    deathDate: string;
     detailedInfo: string; // PREMIUM ONLY
 }
 
 export interface DBAuthor extends Author {
     _id: ObjectId;
-    birthDate: Date;
-    deathDate: Date;
-    timePeriod: DBTimePeriod; // aggregate
+    timePeriod: ObjectId;
 }
 
 export interface ClientAuthor extends Author {
     _id: string;
-    birthDate: string;
-    deathDate: string;
-    timePeriod: ClientTimePeriod;
+    timePeriod: string;
 }
 
 interface DBQueryAuthor extends Omit<DBAuthor, 'timePeriod'> {
