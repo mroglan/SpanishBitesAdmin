@@ -31,6 +31,11 @@ export default function TimePeriods({periods:dbTimePeriods}:Props) {
     useMemo(() => {
         if(periods.length === 0 && action.operation === 'modify') {
             setAction({operation: 'add', selectedPeriod: -1})
+            return
+        }
+        if(!periods[action.selectedPeriod]) {
+            setAction({operation: 'add', selectedPeriod: -1})
+            return
         }
     }, [periods])
 

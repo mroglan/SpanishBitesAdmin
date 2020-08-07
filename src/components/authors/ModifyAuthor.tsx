@@ -61,10 +61,10 @@ export default function ModifyAuthor({authors, authorIndex, timePeriods}:Props) 
             return
         }
         setMessage({type: 'success', content: 'Changes Saved'})
-        const periodsCopy = [...authors]
-        periodsCopy[authorIndex] = values
+        const authorsCopy = [...authors]
+        authorsCopy[authorIndex] = values
 
-        mutate('/api/author', periodsCopy, false)
+        mutate('/api/author', authorsCopy, false)
     }
 
     const deleteAuthor = async () => {
@@ -89,10 +89,10 @@ export default function ModifyAuthor({authors, authorIndex, timePeriods}:Props) 
 
         valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
 
-        const periodsCopy = [...authors]
-        periodsCopy.splice(authorIndex, 1)
+        const authorsCopy = [...authors]
+        authorsCopy.splice(authorIndex, 1)
 
-        mutate('/api/author', periodsCopy, false)
+        mutate('/api/author', authorsCopy, false)
     }
 
     const classes = useStyles()
@@ -100,7 +100,7 @@ export default function ModifyAuthor({authors, authorIndex, timePeriods}:Props) 
         <Paper elevation={3} className={classes.root}>
             <Box className={classes.titleBox}>
                 <Typography variant="h5">
-                    Modify Time Period
+                    Modify Author
                 </Typography>
             </Box>
             <Box mt={3}>

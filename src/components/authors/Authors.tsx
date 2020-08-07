@@ -30,6 +30,11 @@ export default function Authors({authors:dbAuthors, timePeriods}:Props) {
     useMemo(() => {
         if(authors.length === 0 && operation === 'modify') {
             setAction({operation: 'add', selectedAuthor: -1})
+            return
+        }
+        if(!authors[selectedAuthor]) {
+            setAction({operation: 'add', selectedAuthor: -1})
+            return
         }
     }, [authors])
 
