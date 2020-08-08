@@ -77,7 +77,7 @@ export interface DBGenre extends Genre {
 }
 
 
-interface Book {
+export interface Book {
     title: string;
     desc: string;
     detailedInfo: string; // PREMIUM ONLY
@@ -85,18 +85,16 @@ interface Book {
 
 export interface DBBook extends Book {
     _id: ObjectId;
-    genre: DBGenre; // aggregate
-    author: DBQueryAuthor; //aggregate
-    timePeriod: DBTimePeriod; //aggregate
-    passages: DBQueryPassage[]; // aggregate
+    genre: ObjectId; 
+    author: ObjectId; 
+    timePeriod: ObjectId;
 }
 
 export interface ClientBook extends Book {
     _id: string;
-    genre: ClientGenre;
-    author: ClientQueryAuthor;
-    timePeriod: ClientTimePeriod;
-    passages: ClientQueryPassage[]; // aggregate
+    genre: string;
+    author: string;
+    timePeriod: string;
 }
 
 interface DBQueryBook extends Omit<DBBook, 'genre' | 'author' | 'timePeriod'> {
