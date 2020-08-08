@@ -8,12 +8,17 @@ interface Values extends Author {
     timePeriod: string;
 }
 
+const objectifyValues = (values:Values) => {
+    if(!values.timePeriod) return values
+    return {...values, timePeriod: new ObjectId(values.timePeriod)}
+}
+
 const addAuthor = async (values:Values) => {
     const db = await database()
 
-    const dbValues = {...values, timePeriod: values.timePeriod ? new ObjectId(values.timePeriod) : ''}
+    const objectVals = objectifyValues(values)
 
-    const dbOperation = await db.collection('authors').insertOne(dbValues)
+    const dbOperation = await db.collection('authors').insertOne(objectVals)
 
     return <DBAuthor>dbOperation.ops[0]
 }
@@ -21,7 +26,9 @@ const addAuthor = async (values:Values) => {
 const modifyAuthor = async (id:string, values:Values) => {
     const db = await database()
 
-    await db.collection('authors').updateOne({'_id': new ObjectId(id)}, {'$set': {...values}})
+    const objectVals = objectifyValues(values)
+
+    await db.collection('authors').updateOne({'_id': new ObjectId(id)}, {'$set': {...objectVals}})
 }
 
 const deleteAuthor = async (id:string) => {
