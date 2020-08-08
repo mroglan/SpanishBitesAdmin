@@ -29,8 +29,8 @@ interface Props {
 
 const initialValues = {
     title: '',
-    author: '',
-    genre: '',
+    authors: [],
+    genres: [],
     timePeriod: '',
     desc: '',
     detailedInfo: ''

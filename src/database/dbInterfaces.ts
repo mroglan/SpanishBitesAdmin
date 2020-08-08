@@ -85,15 +85,15 @@ export interface Book {
 
 export interface DBBook extends Book {
     _id: ObjectId;
-    genre: ObjectId; 
-    author: ObjectId; 
+    genres: ObjectId[]; 
+    authors: ObjectId[]; 
     timePeriod: ObjectId;
 }
 
 export interface ClientBook extends Book {
     _id: string;
-    genre: string;
-    author: string;
+    genres: string[];
+    authors: string[];
     timePeriod: string;
 }
 
@@ -112,21 +112,19 @@ interface ClientQueryBook extends Omit<ClientBook, 'genre' | 'author' | 'timePer
 
 interface Passage {
     text: string;
-    commentary: string; // comes from text-editor
+    spanishCommentary: string;
+    englishCommentary: string;
     annotations: string; // link to a pdf
 }
 
 export interface DBPassage extends Passage {
     _id: ObjectId;
-    book: DBQueryBook; // aggregate
+    book: DBQueryBook; 
 }
 
 export interface ClientPassage extends Passage {
     _id: string;
-    book: ClientQueryBook;
-    author: ClientQueryAuthor; // populate from book
-    timePeriod: ClientTimePeriod; // populate from book
-    genre: ClientGenre; // populate from book
+    book: string;
 }
 
 interface DBQueryPassage extends Passage {

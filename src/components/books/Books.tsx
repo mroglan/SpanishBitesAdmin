@@ -23,11 +23,15 @@ export default function TimePeriods({timePeriods, authors, genres, books:dbBooks
     const {data:books} = useSWR('/api/book', {initialData: dbBooks})
 
     const listItems = useMemo(() => {
-        return books?.map(({title, author:authorId}) => {
-            const {firstName, lastName} = authors.find(author => author._id === authorId) || {firstName: '', lastName: ''}
+        return books?.map(({title, authors:authorIds}) => {
             return {
                 title, 
-                subtitle: firstName + ' ' + lastName
+                subtitle: authors.map(author => {
+                    if(authorIds.includes(author._id)) {
+                        return author.firstName + ' ' + author.lastName
+                    }
+                    return null
+                }).filter(el => el).join(', ')
             }
         })
     }, [books])

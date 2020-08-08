@@ -27,15 +27,18 @@ interface Props {
 
 export default function BookForm({values, valuesDispatch, timePeriods, authors, genres}:Props) {
 
-    const handleAuthorSelection = (id:string) => {
-        valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'author', value: id}})
+    const handleAuthorSelection = (ids:string[]) => {
+        console.log(ids)
+        valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'authors', value: ids}})
 
         if(values.timePeriod) return
 
-        const {timePeriod} = authors.find((author) => author._id === id)
+        const {timePeriod} = authors.find((author) => author._id === ids[0])
 
         valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'timePeriod', value: timePeriod}})
     }
+
+    const [testVal, setTestVal] = useState([])
 
     const classes = useStyles()
     return (
@@ -48,8 +51,8 @@ export default function BookForm({values, valuesDispatch, timePeriods, authors, 
                 <Grid item>
                     <FormControl variant="outlined" className={classes.select}>
                         <InputLabel color="secondary" id="author-label">Author</InputLabel>
-                        <Select labelId="author-label" value={values.author} label="Author" color="secondary"
-                        onChange={(e) => handleAuthorSelection(e.target.value.toString())}>
+                        <Select labelId="author-label" value={values.authors} label="Author" color="secondary" multiple
+                        onChange={(e:any) => handleAuthorSelection(e.target.value)}>
                             {authors.map((author, i) => (
                                 <MenuItem key={i} value={author._id}>{author.firstName + ' ' + author.lastName}</MenuItem>
                             ))}
@@ -59,8 +62,8 @@ export default function BookForm({values, valuesDispatch, timePeriods, authors, 
                 <Grid item>
                     <FormControl variant="outlined" className={classes.select}>
                         <InputLabel color="secondary" id="genre-label">Genre</InputLabel>
-                        <Select labelId="genre-label" value={values.genre} label="Genre" color="secondary"
-                        onChange={(e) => valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'genre', value: e.target.value}})}>
+                        <Select labelId="genre-label" value={values.genres} label="Genre" color="secondary" multiple
+                        onChange={(e) => valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'genres', value: e.target.value}})}>
                             {genres.map((genre, i) => (
                                 <MenuItem key={i} value={genre._id}>{genre.name}</MenuItem>
                             ))}

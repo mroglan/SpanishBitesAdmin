@@ -7,8 +7,13 @@ import {ObjectId} from 'mongodb'
 interface Values extends Omit<ClientBook, '_id'> {}
 
 const objectifyValues = (values:Values) => {
-    if(!values.author || !values.genre || !values.timePeriod) return values
-    return {...values, author: new ObjectId(values.author), genre: new ObjectId(values.genre), timePeriod: new ObjectId(values.timePeriod)}
+    if(!values.authors || !values.genres || !values.timePeriod) return values
+    return {
+        ...values,
+        authors: values.authors.map(author => new ObjectId(author)),
+        genres: values.genres.map(genre => new ObjectId(genre)),
+        timePeriod: new ObjectId(values.timePeriod)
+    }
 }
 
 const createBook = async (values:Values) => {
