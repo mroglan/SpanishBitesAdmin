@@ -85,7 +85,7 @@ export default function ModifyAuthor({authors, authorIndex, timePeriods}:Props) 
             setMessage({type: 'error', content: 'Error deleting'})
             return
         }
-        setMessage({type: 'success', content: 'Time Period Deleted'})
+        setMessage({type: 'success', content: 'Author Deleted'})
 
         valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
 
