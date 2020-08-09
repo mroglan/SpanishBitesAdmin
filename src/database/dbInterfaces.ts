@@ -89,7 +89,7 @@ export interface ClientBook extends Book {
     timePeriod: string;
 }
 
-interface VocabWord {
+export interface VocabWord {
     term: string;
     def: string;
 }

@@ -7,6 +7,7 @@ import useSWR from 'swr'
 
 import CurrentList from '../items/CurrentList'
 import AddPassage from './AddPassage'
+import ModifyPassage from './ModifyPassage'
 
 interface Props {
     books: ClientBook[];
@@ -17,7 +18,7 @@ export default function Passages({passages:dbPassages, books}:Props) {
 
     const [{operation, selectedPassage}, setAction] = useState({operation: 'add', selectedPassage: -1})
 
-    const {data:passages} = useSWR('/api/author', {initialData: dbPassages})
+    const {data:passages} = useSWR('/api/passage', {initialData: dbPassages})
 
     const listItems = useMemo(() => {
         return passages?.map(({name, book:bookId}) => {
@@ -67,7 +68,8 @@ export default function Passages({passages:dbPassages, books}:Props) {
                 </Box>
             </section>
             <section className={styles.formContainer}>
-                {operation === 'add' ? <AddPassage books={books} passages={passages} /> : '' }
+                {operation === 'add' ? <AddPassage books={books} passages={passages} /> : 
+                operation === 'modify' ? <ModifyPassage books={books} passages={passages} passageIndex={selectedPassage} /> : '' }
             </section>
         </div>
     )
