@@ -3,16 +3,6 @@ import {createMuiTheme, ThemeProvider, Box} from '@material-ui/core'
 import {useState, useEffect, useMemo, useRef} from 'react'
 import {EditorState, convertToRaw} from 'draft-js'
 
-interface Props {
-    value: string;
-    onChange: (val:any) => void;
-    inputId: string;
-}
-
-const basicControls  = [
-    'bold', 'italic', 'underline', 'highlight', 'link'
-]
-
 const theme = createMuiTheme()
 
 Object.assign(theme, {
@@ -44,7 +34,13 @@ Object.assign(theme, {
     }
 })
 
-const handleContentChange = (state:EditorState, callback:Props['onChange']) => {
+interface BasicProps {
+    value: string;
+    onChange: (val:any) => void;
+    inputId: string;
+}
+
+const handleContentChange = (state:EditorState, callback:BasicProps['onChange']) => {
     console.log('content changing...')
     const content = state.getCurrentContent()
     const raw = JSON.stringify(convertToRaw(content))
@@ -52,7 +48,11 @@ const handleContentChange = (state:EditorState, callback:Props['onChange']) => {
     callback(raw)
 }
 
-export function BasicTextEditor({value, onChange, inputId}:Props) {
+const basicControls  = [
+    'bold', 'italic', 'underline', 'highlight', 'link'
+]
+
+export function BasicTextEditor({value, onChange, inputId}:BasicProps) {
 
     const [clientSide, setClientSide] = useState(false)
 
@@ -76,6 +76,48 @@ export function BasicTextEditor({value, onChange, inputId}:Props) {
             <Box>
                 {clientSide && <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={basicControls}
                 onChange={(state) => handleContentChange(state, onChange)} /> }
+            </Box>
+        </ThemeProvider>
+    )
+}
+
+interface AdvancedProps {
+    value: string;
+    onSave: (data:string, config:any) => void;
+    inputId: string;
+    inputRef: any;
+    config: any;
+}
+
+const advancedControls = [
+    "title", "bold", "italic", "underline", "strikethrough", "highlight",
+    "undo", "redo", "link", "media", "numberList", "bulletList", "quote", "code", "clear", 
+]
+
+export function AdvancedTextEditor({value, onSave, inputId, config, inputRef}:AdvancedProps) {
+
+    const [clientSide, setClientSide] = useState(false)
+
+    const [defaultVal, setDefaultVal] = useState(value) 
+
+    const [id, setId] = useState(inputId)
+
+    useMemo(() => {
+        if(!inputId) return
+        if(inputId === id) return
+        setId(inputId)
+        setDefaultVal(value)
+    }, [value])
+
+    useEffect(() => {
+        setClientSide(true)
+    }, [])
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Box>
+                {clientSide && <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={advancedControls}
+                onSave={(data) => onSave(data, config)} ref={inputRef} /> }
             </Box>
         </ThemeProvider>
     )

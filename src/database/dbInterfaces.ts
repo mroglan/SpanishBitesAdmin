@@ -55,14 +55,6 @@ export interface ClientAuthor extends Author {
     timePeriod: string;
 }
 
-interface DBQueryAuthor extends Omit<DBAuthor, 'timePeriod'> {
-    timePeriod: ObjectId;
-}
-
-interface ClientQueryAuthor extends Omit<ClientAuthor, 'timePeriod'> {
-    timePeriod: string;
-}
-
 
 export interface Genre {
     name: string;
@@ -97,42 +89,27 @@ export interface ClientBook extends Book {
     timePeriod: string;
 }
 
-interface DBQueryBook extends Omit<DBBook, 'genre' | 'author' | 'timePeriod'> {
-    genre: ObjectId;
-    author: ObjectId;
-    timePeriod: ObjectId;
+interface VocabWord {
+    term: string;
+    def: string;
 }
-
-interface ClientQueryBook extends Omit<ClientBook, 'genre' | 'author' | 'timePeriod'> {
-    genre: string;
-    author: string;
-    timePeriod: string;
-}
-
 
 interface Passage {
-    text: string;
-    spanishCommentary: string;
-    englishCommentary: string;
+    name: string;
+    desc: string;
+    englishText: string;
+    spanishText: string;
+    commentary: string;
+    vocab: VocabWord[];
     annotations: string; // link to a pdf
 }
 
 export interface DBPassage extends Passage {
     _id: ObjectId;
-    book: DBQueryBook; 
+    book: ObjectId; 
 }
 
 export interface ClientPassage extends Passage {
-    _id: string;
-    book: string;
-}
-
-interface DBQueryPassage extends Passage {
-    _id: ObjectId;
-    book: ObjectId;
-}
-
-interface ClientQueryPassage extends Passage {
     _id: string;
     book: string;
 }
