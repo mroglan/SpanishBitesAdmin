@@ -4,7 +4,7 @@ import Header from '../components/nav/Header'
 import SideBar from '../components/nav/SideBar'
 import WelcomeMessage from '../components/home/WelcomeMessage'
 import Footer from '../components/nav/Footer'
-
+import NavCards from '../components/home/NavCards'
 import {Box} from '@material-ui/core'
 
 export default function Home() {
@@ -24,6 +24,9 @@ export default function Home() {
                 <main className={styles.main}>
                     <Box>
                         <WelcomeMessage />
+                    </Box>
+                    <Box maxWidth={700} mt={3} mx="auto">
+                        <NavCards />
                     </Box>
                 </main>
                 <footer className={styles.footer}>
