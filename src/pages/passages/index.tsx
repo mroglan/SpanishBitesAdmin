@@ -3,6 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllBooks} from '../../utils/books'
 import {getAllPassages} from '../../utils/passages'
 import {ClientBook, ClientPassage} from '../../database/dbInterfaces'
+import {ensureAuth} from '../../utils/auth'
 
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
@@ -41,6 +42,8 @@ export default function Authors({books, passages}:Props) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+
+    await ensureAuth(ctx)
 
     const [books, passages] = await Promise.all([
         getAllBooks(), getAllPassages()

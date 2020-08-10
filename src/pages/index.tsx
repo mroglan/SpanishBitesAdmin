@@ -6,6 +6,8 @@ import WelcomeMessage from '../components/home/WelcomeMessage'
 import Footer from '../components/nav/Footer'
 import NavCards from '../components/home/NavCards'
 import {Box} from '@material-ui/core'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import {ensureAuth} from '../utils/auth'
 
 export default function Home() {
 
@@ -37,3 +39,7 @@ export default function Home() {
     )
 }
 
+export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+    await ensureAuth(ctx)
+    return {props: {}}
+}

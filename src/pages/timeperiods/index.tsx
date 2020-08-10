@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllTimePeriods} from '../../utils/timePeriods'
 import {ClientTimePeriod} from '../../database/dbInterfaces'
+import {ensureAuth} from '../../utils/auth'
 
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
@@ -39,6 +40,8 @@ export default function TimePeriods({timePeriods}:Props) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+
+    await ensureAuth(ctx)
 
     const timePeriods = await getAllTimePeriods()
 

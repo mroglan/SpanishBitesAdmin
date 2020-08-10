@@ -5,6 +5,7 @@ import {getAllTimePeriods} from '../../utils/timePeriods'
 import {getAllBooks} from '../../utils/books'
 import {getAllGenres} from '../../utils/genres'
 import {ClientAuthor, ClientTimePeriod, ClientBook, ClientGenre} from '../../database/dbInterfaces'
+import {ensureAuth} from '../../utils/auth'
 
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
@@ -45,6 +46,8 @@ export default function Authors({authors, timePeriods, books, genres}:Props) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+
+    await ensureAuth(ctx)
 
     const [authors, timePeriods, books, genres] = await Promise.all([
         getAllAuthors(), getAllTimePeriods(), getAllBooks(), getAllGenres()

@@ -113,3 +113,16 @@ export interface ClientPassage extends Passage {
     _id: string;
     book: string;
 }
+
+
+export interface User {
+    username: string;
+    email: string;
+    password: string;
+    isAdmin: boolean;
+    isVerified: boolean;
+}
+
+export interface DBUser extends User {
+    _id: ObjectId;
+}

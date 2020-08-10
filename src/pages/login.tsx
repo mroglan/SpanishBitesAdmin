@@ -3,6 +3,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import LoginForm from '../components/forms/LoginForm'
 import Head from 'next/head'
 import Router from 'next/router'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import {ensureNotAuth} from '../utils/auth'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,4 +46,9 @@ export default function Login() {
             </div>
         </>
     )
+}
+
+export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+    await ensureNotAuth(ctx)
+    return {props: {}}
 }

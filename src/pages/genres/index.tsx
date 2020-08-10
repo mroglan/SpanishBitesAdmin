@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllGenres} from '../../utils/genres'
 import {ClientGenre} from '../../database/dbInterfaces'
+import {ensureAuth} from '../../utils/auth'
 
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
@@ -39,6 +40,8 @@ export default function Genres({genres}:Props) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePropsContext) => {
+
+    await ensureAuth(ctx)
 
     const genres = await getAllGenres()
 
