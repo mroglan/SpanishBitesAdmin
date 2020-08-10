@@ -3,6 +3,8 @@ import {useMediaQuery} from '@material-ui/core'
 import {AppBar, Toolbar, Typography, Box, Grid, Button} from '@material-ui/core'
 import DrawerNav from './DrawerNav'
 import Link from 'next/link'
+import axios from 'axios'
+import Router from 'next/router'
 
 const useStyles = makeStyles(theme => ({
     toolbar: {
@@ -40,6 +42,20 @@ export default function Header({selectedIndex}:Props) {
 
     const smallScreen = useMediaQuery('(max-width:960px)')
 
+    const handleLogout = async () => {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/logout'
+            })
+            Router.push({
+                pathname: '/login'
+            })
+        } catch(e) {
+            console.log(e.response)
+        }
+    }
+
     const classes = useStyles()
     return (
         <AppBar className={classes.appbar} position="sticky">
@@ -62,7 +78,8 @@ export default function Header({selectedIndex}:Props) {
                 </Grid>
                 <Box flexGrow={1} />
                 <Box>
-                    {smallScreen ? <DrawerNav selectedIndex={selectedIndex} /> : <Button><Typography variant="button">
+                    {smallScreen ? <DrawerNav selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
+                    <Typography variant="button">
                         Logout
                     </Typography></Button>}
                 </Box>

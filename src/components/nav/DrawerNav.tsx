@@ -3,6 +3,8 @@ import {Drawer, Box, Divider, IconButton, Typography, Button} from '@material-ui
 import MenuIcon from '@material-ui/icons/Menu';
 import SideBar from './SideBar'
 import {useState} from 'react'
+import axios from 'axios'
+import Router from 'next/router'
 
 const useStyles = makeStyles(theme => ({
     listContainer: {
@@ -16,6 +18,20 @@ const useStyles = makeStyles(theme => ({
 export default function DrawerNav({selectedIndex}) {
 
     const [open, setOpen] = useState(false)
+
+    const handleLogout = async () => {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/logout'
+            })
+            Router.push({
+                pathname: '/login'
+            })
+        } catch(e) {
+            console.log(e.response)
+        }
+    }
 
     const classes = useStyles()
     return (
@@ -31,7 +47,8 @@ export default function DrawerNav({selectedIndex}) {
                     </Box>
                     <Divider />
                     <Box py={3}>
-                        <Button fullWidth style={{justifyContent: 'start', padding: '1.1rem 1.5rem'}}>
+                        <Button fullWidth style={{justifyContent: 'start', padding: '1.1rem 1.5rem'}}
+                        onClick={() => handleLogout()} >
                             <Typography variant="button">
                                 Logout
                             </Typography>
