@@ -19,6 +19,9 @@ export default async function login(req:NextApiRequest, res:NextApiResponse) {
         if(!user.isVerified) {
             return res.status(403).json({msg: 'User is not verified'})
         }
+        if(!user.isAdmin) {
+            return res.status(403).json({msg: 'You are not an Admin!'})
+        }
 
         const match = await new Promise((resolve, reject) => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
