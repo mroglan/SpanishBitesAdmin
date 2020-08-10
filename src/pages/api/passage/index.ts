@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {ClientPassage, DBPassage} from '../../../database/dbInterfaces'
 import {getAllPassages} from '../../../utils/passages'
+import {verifyAdmin} from '../../../utils/auth'
 import {ObjectId} from 'mongodb'
 
 interface Values extends Omit<ClientPassage, '_id'> {}
@@ -32,7 +33,7 @@ const deletePassage = async (id:string) => {
     await db.collection('passages').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function passage(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function passage(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -61,4 +62,4 @@ export default async function passage(req:NextApiRequest, res:NextApiResponse) {
         console.log(e)
         return res.status(200).json({msg: 'Internal Server Error'})
     }
-}
+})

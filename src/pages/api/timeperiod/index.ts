@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {TimePeriod, DBTimePeriod} from '../../../database/dbInterfaces'
 import {getAllTimePeriods} from '../../../utils/timePeriods'
+import {verifyAdmin} from '../../../utils/auth'
 import {ObjectId} from 'mongodb'
 
 const addTimePeriod = async (values:TimePeriod) => {
@@ -24,7 +25,7 @@ const deleteTimePeriod = async (id:string) => {
     await db.collection('timePeriods').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function timePeriod(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function timePeriod(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -53,4 +54,4 @@ export default async function timePeriod(req:NextApiRequest, res:NextApiResponse
         console.log(e)
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})

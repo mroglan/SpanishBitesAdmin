@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {Genre, DBGenre} from '../../../database/dbInterfaces'
 import {getAllGenres} from '../../../utils/genres'
+import {verifyAdmin} from '../../../utils/auth'
 import {ObjectId} from 'mongodb'
 
 const addGenre = async (values:Genre) => {
@@ -24,7 +25,7 @@ const deleteGenre = async (id:string) => {
     await db.collection('genres').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function genre(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function genre(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -53,4 +54,4 @@ export default async function genre(req:NextApiRequest, res:NextApiResponse) {
         console.log(e)
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})

@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {ClientBook, DBBook} from '../../../database/dbInterfaces'
 import {getAllBooks} from '../../../utils/books'
+import {verifyAdmin} from '../../../utils/auth'
 import {ObjectId} from 'mongodb'
 
 interface Values extends Omit<ClientBook, '_id'> {}
@@ -40,7 +41,7 @@ const deleteBook = async (id:string) => {
     await db.collection('books').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function book(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function book(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -69,4 +70,4 @@ export default async function book(req:NextApiRequest, res:NextApiResponse) {
         console.log(e)
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})

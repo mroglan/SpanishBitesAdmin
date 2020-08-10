@@ -10,6 +10,7 @@ import {SWRConfig} from 'swr'
 
 axios.defaults.baseURL = process.env.BASE_URL
 axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.withCredentials = true
 
 const fetcher = (url:string) => axios.get(url).then(response => response.data)
 

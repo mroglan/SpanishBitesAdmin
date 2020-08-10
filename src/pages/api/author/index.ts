@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {Author, DBAuthor} from '../../../database/dbInterfaces'
 import {getAllAuthors} from '../../../utils/authors'
+import {verifyAdmin} from '../../../utils/auth'
 import {ObjectId} from 'mongodb'
 
 interface Values extends Author {
@@ -37,7 +38,7 @@ const deleteAuthor = async (id:string) => {
     await db.collection('authors').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function author(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function author(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -66,4 +67,4 @@ export default async function author(req:NextApiRequest, res:NextApiResponse) {
         console.log(e)
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})
