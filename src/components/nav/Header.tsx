@@ -2,6 +2,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {useMediaQuery} from '@material-ui/core'
 import {AppBar, Toolbar, Typography, Box, Grid, Button} from '@material-ui/core'
 import DrawerNav from './DrawerNav'
+import Link from 'next/link'
 
 const useStyles = makeStyles(theme => ({
     toolbar: {
@@ -24,6 +25,10 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             display: 'none'
         }
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 }))
 
@@ -46,9 +51,13 @@ export default function Header({selectedIndex}:Props) {
                         </div>
                     </Grid>
                     <Grid className={classes.title} item>
-                        <Typography variant="h5">
-                            Spanish Bites Admin
-                        </Typography>
+                        <Link href="/">
+                            <a className={classes.link}>
+                                <Typography variant="h5">
+                                    Spanish Bites Admin
+                                </Typography>
+                            </a>
+                        </Link>
                     </Grid>
                 </Grid>
                 <Box flexGrow={1} />
