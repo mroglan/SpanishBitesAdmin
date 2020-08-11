@@ -5,7 +5,8 @@ const initialValues = {
     genres: [],
     timePeriod: '',
     desc: '',
-    detailedInfo: ''
+    detailedInfo: '',
+    image: ''
 }
 
 export default function valuesReducer(state, {type, payload}) {

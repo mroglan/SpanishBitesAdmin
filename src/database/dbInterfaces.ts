@@ -73,6 +73,7 @@ export interface DBGenre extends Genre {
 export interface Book {
     title: string;
     desc: string;
+    image: string;
     detailedInfo: string; // PREMIUM ONLY
 }
 

@@ -1,8 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles'
-import {Box, TextField, Grid, Typography, Divider, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
+import {Box, TextField, Grid, Typography, Divider, FormControl, InputLabel, Select, MenuItem, Button} from '@material-ui/core'
 import {BasicTextEditor} from '../items/TextEditor'
 import {ClientBook, ClientTimePeriod, ClientAuthor, ClientGenre} from '../../database/dbInterfaces'
-import {useState, useCallback, useMemo, Dispatch, useEffect} from 'react'
+import {Dispatch, useRef} from 'react'
+import {uploadImage} from '../../utils/images'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -10,6 +11,9 @@ const useStyles = makeStyles(theme => ({
     },
     select: {
         minWidth: 200
+    },
+    link: {
+        textDecoration: 'none'
     }
 }))
 
@@ -27,6 +31,8 @@ interface Props {
 
 export default function BookForm({values, valuesDispatch, timePeriods, authors, genres}:Props) {
 
+    const imageRef = useRef<HTMLInputElement>()
+
     const handleAuthorSelection = (ids:string[]) => {
         console.log(ids)
         valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'authors', value: ids}})
@@ -38,7 +44,11 @@ export default function BookForm({values, valuesDispatch, timePeriods, authors, 
         valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'timePeriod', value: timePeriod}})
     }
 
-    const [testVal, setTestVal] = useState([])
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0]
+        const url = await uploadImage(file)
+        valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'image', value: url}})
+    }
 
     const classes = useStyles()
     return (
@@ -82,6 +92,24 @@ export default function BookForm({values, valuesDispatch, timePeriods, authors, 
                     </FormControl>
                 </Grid>
             </Grid>
+            <Divider style={{marginTop: '1rem'}} />
+            <Box my={2}>
+                <input type="file" ref={imageRef} style={{width: 0, height: 0, position: 'fixed'}} onChange={handleFileUpload} />
+                <Grid container spacing={2}>
+                    <Grid item>
+                        <Button variant="outlined" onClick={() => imageRef.current.click()} >
+                            Change Image
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        {values.image && <a className={classes.link} href={values.image} target="_blank">
+                            <Button variant="outlined">
+                                View Current Image
+                            </Button>
+                        </a>}
+                    </Grid>
+                </Grid>
+            </Box>
             <Divider style={{marginTop: '1rem'}} />
             <Box my={2}>
                 <Typography variant="body1">

@@ -33,7 +33,8 @@ const initialValues = {
     genres: [],
     timePeriod: '',
     desc: '',
-    detailedInfo: ''
+    detailedInfo: '',
+    image: ''
 }
 
 export default function AddTimePeriod({timePeriods, authors, genres, books}:Props) {
