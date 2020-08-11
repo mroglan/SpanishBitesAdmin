@@ -12,6 +12,7 @@ export interface Event {
 export interface TimePeriod {
     name: string;
     dateRange: string[]; // beginning and end date
+    intro: string;
     spainEvents: Event[];
     worldEvents: Event[];
 }

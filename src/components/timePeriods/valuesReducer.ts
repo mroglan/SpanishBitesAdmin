@@ -3,7 +3,8 @@ const initialValues = {
     name: '',
     dateRange: ['', ''],
     spainEvents: [],
-    worldEvents: []
+    worldEvents: [],
+    intro: ''
 }
 
 export default function valuesReducer(state, {type, payload}) {

@@ -1,8 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles'
-import {Box, TextField, Grid, Typography, Divider} from '@material-ui/core'
+import {Box, TextField, Grid, Typography, Divider, Button} from '@material-ui/core'
 import {ClientTimePeriod, Event} from '../../database/dbInterfaces'
 import {SuccessIconButton} from '../items/buttons'
 import EventModal from './EventModal'
+import IntroModal from './IntroModal'
 import EditList from '../items/EditList'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState, useCallback, useMemo, Dispatch} from 'react'
@@ -13,14 +14,16 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-interface Values extends Omit<ClientTimePeriod, '_id'> {}
+interface Values extends Omit<ClientTimePeriod, '_id'> {
+    _id?: string;
+}
 
 interface Props {
     values: Values;
     valuesDispatch: Dispatch<any>;
 }
 
-const initialEventVals = {
+const defaultEventVals = {
     title: '',
     desc: '',
     image: '',
@@ -29,6 +32,19 @@ const initialEventVals = {
 }
 
 export default function TimePeriodForm({values, valuesDispatch}:Props) {
+
+    const closeIntroModal = () => setIntroModalStates({...introModalStates, open: false})
+
+    const [introModalStates, setIntroModalStates] = useState({
+        open: false,
+        onSave: (value?:string, config?:any) => {
+            closeIntroModal()
+            if(!value) return
+            valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'intro', value}})
+        }
+    })
+
+    const openIntroModal = () => setIntroModalStates({...introModalStates, open: true})
 
     const closeModal = useCallback(() => {
         setEventStates({...eventStates, open: false})
@@ -58,9 +74,9 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
         selectedIndex: -1,
     })
 
-    const initialValues = useMemo(() => {
+    const initialEventValues = useMemo(() => {
         if(eventStates.type === 'create') {
-            return initialEventVals
+            return defaultEventVals
         }
         if(eventStates.scope === 'spain') {
             return values.spainEvents[eventStates.selectedIndex]
@@ -110,6 +126,12 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
                 </Grid>
             </Box>
             <Divider />
+            <Box my={2}>
+                <Button variant="outlined" onClick={() => openIntroModal()} >
+                    Modify Introduction
+                </Button>
+            </Box>
+            <Divider />
             <Box my={1}>
                 <Box>
                     <Grid container spacing={1} wrap="nowrap" alignItems="center">
@@ -151,7 +173,8 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
                 </Box>
             </Box>
             <Divider />
-            <EventModal initialValues={initialValues} eventStates={eventStates} />
+            <EventModal initialValues={initialEventValues} eventStates={eventStates} />
+            <IntroModal values={values} modalStates={introModalStates} />
         </form>
     )
 }
