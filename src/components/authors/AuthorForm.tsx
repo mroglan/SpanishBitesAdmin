@@ -1,5 +1,5 @@
 import {makeStyles} from '@material-ui/core/styles'
-import {Box, TextField, Grid, Typography, Divider, FormControl, InputLabel, Select, MenuItem, IconButton} from '@material-ui/core'
+import {Box, TextField, Grid, Typography, Divider, FormControl, InputLabel, Select, MenuItem, Button} from '@material-ui/core'
 import {ClientAuthor, ClientTimePeriod, Reference} from '../../database/dbInterfaces'
 import {SuccessIconButton, ErrorIconButton} from '../items/buttons'
 import EditList from '../items/EditList'
@@ -7,11 +7,15 @@ import ReferenceModal from './ReferenceModal'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import {useState, useCallback, useMemo, Dispatch} from 'react'
+import {useState, useCallback, useMemo, Dispatch, useRef} from 'react'
+import {uploadImage} from '../../utils/images'
 
 const useStyles = makeStyles(theme => ({
     textField: {
         minWidth: 300,
+    },
+    link: {
+        textDecoration: 'none'
     }
 }))
 
@@ -32,6 +36,8 @@ const initialModalVals = {
 }
 
 export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) {
+
+    const imageRef = useRef<HTMLInputElement>()
 
     const closeModal = useCallback(() => setModalStates({...modalStates, open: false}), [])
 
@@ -102,6 +108,14 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
         }))
     }, [values])
 
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0]
+        const url = await uploadImage(file)
+        valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'image', value: url}})
+    }
+
+    console.log('values', values)
+
     const classes = useStyles()
     return (
         <form>
@@ -113,6 +127,7 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                 <TextField variant="outlined" color="secondary" label="Last Name" className={classes.textField}
                 value={values.lastName} onChange={(e) => valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'lastName', value: e.target.value}})} />
             </Box>
+            <Divider />
             <Box my={2}>
                 <Grid container spacing={3}>
                     <Grid item>
@@ -135,6 +150,24 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                         ))}
                     </Select>
                 </FormControl>
+            </Box>
+            <Divider />
+            <Box my={2}>
+                <input type="file" ref={imageRef} style={{width: 0, height: 0, position: 'fixed'}} onChange={handleFileUpload} />
+                <Grid container spacing={2}>
+                    <Grid item>
+                        <Button variant="outlined" onClick={() => imageRef.current.click()} >
+                            Change Image
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        {values.image && <a className={classes.link} href={values.image} target="_blank">
+                            <Button variant="outlined">
+                                View Current Image
+                            </Button>
+                        </a>}
+                    </Grid>
+                </Grid>
             </Box>
             <Divider />
             <Box my={2}>

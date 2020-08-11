@@ -42,6 +42,7 @@ export interface Author {
     influences: AuthorInfluence[];
     birthDate: string;
     deathDate: string;
+    image: string;
     detailedInfo: string; // PREMIUM ONLY
 }
 

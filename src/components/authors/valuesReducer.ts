@@ -19,7 +19,8 @@ const initialValues = {
     detailedInfo: '',
     keyPoints: [''],
     relevantWorks: [],
-    influences: []
+    influences: [],
+    image: ''
 }
 
 export default function valuesReducer(state, {type, payload}:Action) {

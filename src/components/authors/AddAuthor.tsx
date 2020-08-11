@@ -35,7 +35,8 @@ const initialValues = {
     detailedInfo: '',
     keyPoints: [''],
     relevantWorks: [],
-    influences: []
+    influences: [],
+    image: ''
 }
 
 export default function AddAuthor({authors, timePeriods}:Props) {
