@@ -44,7 +44,7 @@ export default function EventModal({initialValues, eventStates: {type, open, onS
                         value={values.title} onChange={(e) => setValues({...values, title: e.target.value})} />
                     </Box>
                     <Box my={2}>
-                        <TextField label="Event Date" variant="outlined" type="date" color="secondary"
+                        <TextField label="Event Year" variant="outlined" color="secondary"
                         value={values.date} onChange={(e) => setValues({...values, date: e.target.value.toString()})} />
                     </Box>
                     <Box my={2}>

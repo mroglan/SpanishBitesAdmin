@@ -28,7 +28,7 @@ const defaultEventVals = {
     desc: '',
     image: '',
     location: '',
-    date: '2020-01-01'
+    date: ''
 }
 
 export default function TimePeriodForm({values, valuesDispatch}:Props) {
