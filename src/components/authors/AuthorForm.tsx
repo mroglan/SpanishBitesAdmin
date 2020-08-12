@@ -131,11 +131,11 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
             <Box my={2}>
                 <Grid container spacing={3}>
                     <Grid item>
-                        <TextField variant="outlined" color="secondary" label="Birth Year" type="date"
+                        <TextField variant="outlined" color="secondary" label="Birth Year"
                         value={values.birthDate} onChange={(e) => valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'birthDate', value: e.target.value}})} />
                     </Grid>
                     <Grid item>
-                        <TextField variant="outlined" color="secondary" label="Death Year" type="date"
+                        <TextField variant="outlined" color="secondary" label="Death Year"
                         value={values.deathDate} onChange={(e) => valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'deathDate', value: e.target.value}})} />
                     </Grid>
                 </Grid>

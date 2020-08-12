@@ -13,8 +13,8 @@ interface Action {
 const initialValues = {
     firstName: '',
     lastName: '',
-    birthDate: '2020-01-01',
-    deathDate: '2020-01-01',
+    birthDate: '',
+    deathDate: '',
     timePeriod: '',
     detailedInfo: '',
     keyPoints: [''],
