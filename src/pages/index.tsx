@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Header from '../components/nav/Header'
 import SideBar from '../components/nav/SideBar'
+import {libraryItems} from '../components/nav/navItems'
 import WelcomeMessage from '../components/home/WelcomeMessage'
 import Footer from '../components/nav/Footer'
 import NavCards from '../components/home/NavCards'
@@ -18,10 +19,10 @@ export default function Home() {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header selectedIndex={-1} />
+                    <Header items={libraryItems} selectedIndex={-1} />
                 </header>
                 <aside className={styles.sideBar}>
-                    <SideBar selectedIndex={-1} />
+                    <SideBar items={libraryItems} selectedIndex={-1} />
                 </aside>
                 <main className={styles.main}>
                     <Box>

@@ -7,6 +7,7 @@ import {ensureAuth} from '../../utils/auth'
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
 import SideBar from '../../components/nav/SideBar'
+import {libraryItems} from '../../components/nav/navItems'
 import Footer from '../../components/nav/Footer'
 import TimePeriodsSection from '../../components/timePeriods/TimePeriods'
 
@@ -23,10 +24,10 @@ export default function TimePeriods({timePeriods}:Props) {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header selectedIndex={0} />
+                    <Header items={libraryItems} selectedIndex={0} />
                 </header>
                 <aside className={styles.sideBar}>
-                    <SideBar selectedIndex={0} />
+                    <SideBar items={libraryItems} selectedIndex={0} />
                 </aside>
                 <main className={styles.main}>
                     <TimePeriodsSection periods={timePeriods} />

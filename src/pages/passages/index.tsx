@@ -8,6 +8,7 @@ import {ensureAuth} from '../../utils/auth'
 import styles from '../../styles/Home.module.css'
 import Header from '../../components/nav/Header'
 import SideBar from '../../components/nav/SideBar'
+import {libraryItems} from '../../components/nav/navItems'
 import Footer from '../../components/nav/Footer'
 import Passages from '../../components/passages/Passages'
 
@@ -25,10 +26,10 @@ export default function Authors({books, passages}:Props) {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header selectedIndex={4} />
+                    <Header items={libraryItems} selectedIndex={4} />
                 </header>
                 <aside className={styles.sideBar}>
-                    <SideBar selectedIndex={4} />
+                    <SideBar items={libraryItems} selectedIndex={4} />
                 </aside>
                 <main className={styles.main}>
                     <Passages passages={passages} books={books} />
