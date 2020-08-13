@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function DrawerNav({selectedIndex}) {
+export default function DrawerNav({selectedIndex, items}) {
 
     const [open, setOpen] = useState(false)
 
@@ -43,7 +43,7 @@ export default function DrawerNav({selectedIndex}) {
             classes={{paper: classes.paper}} >
                 <Box className={classes.listContainer}>
                     <Box>
-                        <SideBar selectedIndex={selectedIndex} />
+                        <SideBar selectedIndex={selectedIndex} items={items} />
                     </Box>
                     <Divider />
                     <Box py={3}>

@@ -36,9 +36,10 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
     selectedIndex: number;
+    items: {name: string; link: string;}[];
 }
 
-export default function Header({selectedIndex}:Props) {
+export default function Header({selectedIndex, items}:Props) {
 
     const smallScreen = useMediaQuery('(max-width:1280px)')
 
@@ -78,7 +79,7 @@ export default function Header({selectedIndex}:Props) {
                 </Grid>
                 <Box flexGrow={1} />
                 <Box>
-                    {smallScreen ? <DrawerNav selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
+                    {smallScreen ? <DrawerNav items={items} selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
                     <Typography variant="button">
                         Logout
                     </Typography></Button>}

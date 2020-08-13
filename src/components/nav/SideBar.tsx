@@ -37,9 +37,10 @@ const menuItems = [
 
 interface Props {
     selectedIndex: number;
+    items: {name: string; link: string}[]
 }
 
-export default function SideBar({selectedIndex}:Props) {
+export default function SideBar({selectedIndex, items}:Props) {
 
     const redirect = (url:string) => {
         Router.push({
@@ -51,7 +52,7 @@ export default function SideBar({selectedIndex}:Props) {
     return (
         <Box className={classes.root}>
             <List component="nav" aria-label="Admin navigation">
-                {menuItems.map((item, i) => (
+                {items.map((item, i) => (
                     <ListItem className={`${classes.listItem} ${selectedIndex === i ? classes.selectedItem : ''}`} 
                     key={i} button onClick={() => redirect(item.link)}>
                         <Box>
