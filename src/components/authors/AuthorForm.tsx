@@ -114,8 +114,6 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
         valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'image', value: url}})
     }
 
-    console.log('values', values)
-
     const classes = useStyles()
     return (
         <form>
