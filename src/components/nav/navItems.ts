@@ -8,7 +8,6 @@ export const libraryItems = [
 ]
 
 export const bitesItems = [
-    {name: 'Previous Bites', link: '/bites/previous'},
-    {name: 'Future Bites', link: '/bites/future'},
+    {name: 'Edit Bites', link: '/bites/edit'},
     {name: 'Calender', link: '/bites/calender'}
 ]
