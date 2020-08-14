@@ -129,3 +129,20 @@ export interface User {
 export interface DBUser extends User {
     _id: ObjectId;
 }
+
+
+export interface SpanishBite {
+    author: string;
+    image: string;
+    work: string; // book, poem, etc.
+    text: string;
+    desc: string;
+}
+
+export interface DBSpanishBite extends SpanishBite {
+    _id: ObjectId;
+}
+
+export interface ClientSpanishBite extends SpanishBite {
+    _id: string;
+}
