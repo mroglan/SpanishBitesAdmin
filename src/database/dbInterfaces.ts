@@ -132,11 +132,13 @@ export interface DBUser extends User {
 
 
 export interface SpanishBite {
+    name: string; // just for admin to keep track of them
     author: string;
     image: string;
     work: string; // book, poem, etc.
     text: string;
     desc: string;
+    dates: string[];
 }
 
 export interface DBSpanishBite extends SpanishBite {
