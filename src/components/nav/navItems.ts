@@ -9,5 +9,5 @@ export const libraryItems = [
 
 export const bitesItems = [
     {name: 'Edit Bites', link: '/bites/edit'},
-    {name: 'Calender', link: '/bites/calender'}
+    {name: 'Calendar', link: '/bites/calendar'}
 ]
