@@ -56,7 +56,7 @@ export default function AddBite({authors, bites}:Props) {
             }
         })
 
-        setLoading(true)
+        setLoading(false)
 
         if(status !== 200) {
             setMessage({type: 'error', content: 'Error Saving'})
