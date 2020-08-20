@@ -24,7 +24,7 @@ export default function Authors({authors:dbAuthors, timePeriods}:Props) {
         return authors?.map(({firstName, lastName, birthDate, deathDate}) => ({
             title: firstName + ' ' + lastName,
             subtitle: birthDate + ' - ' + deathDate
-        }))
+        })).sort((a, b) => a.title > b.title ? 1 : a.title < b.title ? -1 : 0)
     }, [authors])
 
     useMemo(() => {
