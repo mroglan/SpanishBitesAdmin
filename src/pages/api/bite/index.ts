@@ -27,7 +27,7 @@ const deleteBite = async (id:string) => {
     await db.collection('bites').deleteOne({'_id': new ObjectId(id)})
 }
 
-export default async function bite(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function bite(req:NextApiRequest, res:NextApiResponse) {
 
     try {   
 
@@ -56,4 +56,4 @@ export default async function bite(req:NextApiRequest, res:NextApiResponse) {
         console.log(e)
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})
