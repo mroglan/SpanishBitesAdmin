@@ -194,7 +194,7 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                 ))}
             </Box>
             <Divider />
-            <Box my={1}>
+            {/* <Box my={1}>
                 <Box>
                     <Grid container spacing={1} wrap="nowrap" alignItems="center">
                         <Grid item>
@@ -213,7 +213,7 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                     <EditList items={influencesListItems} onDeleteClick={(i:number) => removeReference(i, 'influences')}
                     onEditClick={(i:number) => openModal('modify', 'influences', i)} />
                 </Box>
-            </Box>
+            </Box> */}
             <Divider />
             <Box my={1}>
                 <Box>
