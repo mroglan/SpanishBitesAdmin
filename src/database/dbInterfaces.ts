@@ -148,3 +148,16 @@ export interface DBSpanishBite extends SpanishBite {
 export interface ClientSpanishBite extends SpanishBite {
     _id: string;
 }
+
+
+export interface DBDailyEvent {
+    date: Date;
+    bite: ObjectId;
+    _id: ObjectId;
+}
+
+export interface ClientDailyEvent {
+    date: string;
+    bite: string;
+    _id: string;
+}
