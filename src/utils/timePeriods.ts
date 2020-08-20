@@ -6,5 +6,5 @@ export const getAllTimePeriods = async () => {
 
     const timePeriods:DBTimePeriod[] = await db.collection('timePeriods').find({}).toArray()
 
-    return timePeriods
+    return timePeriods.sort((a, b) => Number(a.dateRange[0]) - Number(b.dateRange[0]))
 }
