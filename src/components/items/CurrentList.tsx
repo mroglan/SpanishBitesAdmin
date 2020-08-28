@@ -1,5 +1,7 @@
-import {Box, List, ListItem, IconButton, Grid, Typography} from '@material-ui/core'
+import {Box, List, ListItem, Grid, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
+import {SearchInput} from './inputs'
+import {useState} from 'react'
 
 const useStyles = makeStyles(theme => ({
     listItem: {
@@ -34,21 +36,38 @@ interface Props {
 
 export default function CurrentList({items, onClick, selected}:Props) {
 
+    const [excludeArray, setExcludeArray] = useState([])
+
+    const onSearch = (input:string) => {
+        if(!input) setExcludeArray([])
+        const newExcludes = []
+        const filter = new RegExp(input, 'i')
+        items.forEach(({title}, i) => {
+            if(title.match(filter)) return
+            newExcludes.push(i)
+        })
+        setExcludeArray(newExcludes)
+    }
+
     const classes = useStyles()
     return (
         <Box>
+            <SearchInput onSearch={onSearch} />
             <List>
-                {items?.map(({title, subtitle}, i) => (
-                    <ListItem key={i} button onClick={() => onClick(i)}
-                    className={`${classes.listItem} ${selected === i ? classes.selected : ''}`}>
-                        <Typography className={classes.text} variant="h5">
-                            {title}
-                        </Typography>
-                        <Typography className={`${classes.subtitle} ${classes.text}`} variant="subtitle2">
-                            {subtitle}
-                        </Typography>
-                    </ListItem>
-                ))}
+                {items?.map(({title, subtitle}, i) => {
+                    if(excludeArray.includes(i)) return null
+                    return (
+                        <ListItem key={i} button onClick={() => onClick(i)}
+                        className={`${classes.listItem} ${selected === i ? classes.selected : ''}`}>
+                            <Typography className={classes.text} variant="h5">
+                                {title}
+                            </Typography>
+                            <Typography className={`${classes.subtitle} ${classes.text}`} variant="subtitle2">
+                                {subtitle}
+                            </Typography>
+                        </ListItem>
+                    )
+                })}
             </List>
         </Box>
     )
