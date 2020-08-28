@@ -22,7 +22,7 @@ export default function Authors({authors:dbAuthors, timePeriods}:Props) {
 
     const listItems = useMemo(() => {
         return authors?.map(({firstName, lastName, birthDate, deathDate}) => ({
-            title: firstName + ' ' + lastName,
+            title: lastName + ', ' + firstName,
             subtitle: birthDate + ' - ' + deathDate
         }))
     }, [authors])
