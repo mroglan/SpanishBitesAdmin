@@ -19,7 +19,7 @@ export default function TimePeriods({periods:dbTimePeriods}:Props) {
 
     const {operation} = useMemo(() => action, [action])
 
-    const {data:periods} = useSWR('/api/timeperiod', {initialData: dbTimePeriods})
+    const {data:periods} = useSWR('/api/timeperiod', {initialData: dbTimePeriods, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return periods?.map(period => ({

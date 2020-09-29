@@ -1,5 +1,6 @@
-import {Dialog, DialogTitle, DialogActions, DialogContent, Box, TextField} from '@material-ui/core'
+import {Dialog, DialogTitle, DialogActions, DialogContent, Box, TextField, Typography, Divider} from '@material-ui/core'
 import {SuccessButton} from '../items/buttons'
+import {BasicTextEditor} from '../items/TextEditor'
 import {makeStyles} from '@material-ui/core/styles'
 import {Event} from '../../database/dbInterfaces'
 import {useState, useMemo} from 'react'
@@ -32,6 +33,9 @@ export default function EventModal({initialValues, eventStates: {type, open, onS
         setValues(initialValues)
     }, [open])
 
+    console.log('desc', values.desc)
+    console.log(index)
+
     const classes = useStyles()
     return (
         <Dialog fullWidth open={open} onClose={() => onSave(null)} aria-labelledby="Event Dialog"
@@ -39,10 +43,10 @@ export default function EventModal({initialValues, eventStates: {type, open, onS
             <DialogTitle style={{textAlign: 'center'}}>{type === 'create' ? 'Create an Event' : 'Edit Event'}</DialogTitle>
             <DialogContent dividers>
                 <form>
-                    <Box my={2}>
+                    {/*<Box my={2}>
                         <TextField variant="outlined" color="secondary" label="Event Title" className={classes.textField}
                         value={values.title} onChange={(e) => setValues({...values, title: e.target.value})} />
-                    </Box>
+                    </Box>*/}
                     <Box my={2}>
                         <TextField label="Event Year" variant="outlined" color="secondary"
                         value={values.date} onChange={(e) => setValues({...values, date: e.target.value.toString()})} />
@@ -55,10 +59,13 @@ export default function EventModal({initialValues, eventStates: {type, open, onS
                         <TextField variant="outlined" color="secondary" label="Image URL" className={classes.textField}
                         value={values.image} onChange={(e) => setValues({...values, image: e.target.value})} />
                     </Box>
+                    <Divider />
                     <Box my={2} pr={3}>
-                        <TextField variant="outlined" color="secondary" label="Event Description" className={classes.textField}
-                        value={values.desc} onChange={(e) => setValues({...values, desc: e.target.value})}
-                        multiline fullWidth rows={3} rowsMax={10} />
+                        <Typography variant="body1">
+                            Description:
+                        </Typography>
+                        {index > -1 && <BasicTextEditor value={values.desc} onChange={(val:string) => setValues({...values, desc: val})} 
+                        inputId={index + initialValues.title} />}
                     </Box>
                 </form>
             </DialogContent>

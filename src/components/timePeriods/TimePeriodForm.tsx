@@ -7,6 +7,7 @@ import IntroModal from './IntroModal'
 import EditList from '../items/EditList'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState, useCallback, useMemo, Dispatch} from 'react'
+import Editor from 'mui-rte'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -95,14 +96,14 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
     }, [])
 
     const spainEventEditListItems = useMemo(() => {
-        return values.spainEvents.map(({title, date}) => {
-            return {title, subtitle: date}
+        return values.spainEvents.map(({date, desc}) => {
+            return {title: <Editor defaultValue={desc} readOnly controls={[]} /> , subtitle: date}
         })
     }, [values])
 
     const worldEventEditListItems = useMemo(() => {
-        return values.worldEvents.map(({title, date}) => {
-            return {title, subtitle: date}
+        return values.worldEvents.map(({desc, date}) => {
+            return {title: <Editor defaultValue={desc} readOnly controls={[]} />, subtitle: date}
         })
     }, [values])
 
