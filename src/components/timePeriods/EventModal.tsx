@@ -64,8 +64,8 @@ export default function EventModal({initialValues, eventStates: {type, open, onS
                         <Typography variant="body1">
                             Description:
                         </Typography>
-                        {index > -1 && <BasicTextEditor value={values.desc} onChange={(val:string) => setValues({...values, desc: val})} 
-                        inputId={index + initialValues.title} />}
+                        <BasicTextEditor value={values.desc} onChange={(val:string) => setValues({...values, desc: val})} 
+                        inputId={index + initialValues.title} />
                     </Box>
                 </form>
             </DialogContent>
