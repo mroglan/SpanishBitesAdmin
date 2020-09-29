@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
     items: {
-        title: string;
+        title: any;
         subtitle: string;
     }[];
     onEditClick: (index:number) => void;
@@ -21,24 +21,17 @@ interface Props {
 }
 
 export default function EditList({items, onEditClick, onDeleteClick}:Props) {
-
-    const shortenedItems = useMemo(() => items.map(item => {
-        return {
-            title: item.title.length > 20 ? item.title.substring(0, 17) + '...' : item.title,
-            subtitle: item.subtitle.length > 30 ? item.subtitle.substring(0, 27) + '...' : item.subtitle
-        }
-    }), [items])
     
     const classes = useStyles()
     return (
         <Box>
             <List>
-                {shortenedItems.map(({title, subtitle}, i) => (
+                {items.map(({title, subtitle}, i) => (
                     <ListItem className={`${classes.listItem}`} key={i}>
                         <Grid container alignItems="center" wrap="nowrap">
                             <Grid item style={{flexGrow: 1}}>
                                 <Box>
-                                    <Typography variant="h6">
+                                    <Typography style={{fontSize: 16}} variant="h6">
                                         {title}
                                     </Typography>
                                 </Box>
