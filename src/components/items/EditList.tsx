@@ -21,6 +21,12 @@ interface Props {
 }
 
 export default function EditList({items, onEditClick, onDeleteClick}:Props) {
+
+    const handleDelete = (index:number) => {
+        const confirmedDelete = confirm(`Are you sure you want to delete this item?`)
+        if(!confirmedDelete) return
+        onDeleteClick(index)
+    }
     
     const classes = useStyles()
     return (
@@ -49,7 +55,7 @@ export default function EditList({items, onEditClick, onDeleteClick}:Props) {
                                         </WarningIconButton>
                                     </Grid>
                                     <Grid item>
-                                        <ErrorIconButton onClick={() => onDeleteClick(i)}>
+                                        <ErrorIconButton onClick={() => handleDelete(i)}>
                                             <RemoveCircleIcon />
                                         </ErrorIconButton>
                                     </Grid>

@@ -70,6 +70,13 @@ export default function ModifyPassage({books, passageIndex, passages}:Props) {
     const deletePassage = async () => {
         setLoading(true)
 
+        const confirmedDelete = confirm(`Are you sure you want to delete ${values.name}?`)
+
+        if(!confirmedDelete) {
+            setLoading(false)
+            return
+        }
+
         const {status} = await axios({
             method: 'POST',
             url: '/api/passage',

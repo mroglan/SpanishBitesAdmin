@@ -70,6 +70,13 @@ export default function ModifyAuthor({authors, authorIndex, timePeriods}:Props) 
     const deleteAuthor = async () => {
         setLoading(true)
 
+        const confirmedDelete = confirm(`Are you sure you want to delete ${values.firstName} ${values.lastName}?`)
+
+        if(!confirmedDelete) {
+            setLoading(false)
+            return
+        }
+
         const {status} = await axios({
             method: 'POST',
             url: '/api/author',

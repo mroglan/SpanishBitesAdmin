@@ -73,6 +73,13 @@ export default function ModifyBook({books, bookIndex, timePeriods, authors, genr
     const deleteBook = async () => {
         setLoading(true)
 
+        const confirmedDelete = confirm(`Are you sure you want to delete ${values.title}?`)
+
+        if(!confirmedDelete) {
+            setLoading(false)
+            return
+        }
+
         const {status} = await axios({
             method: 'POST',
             url: '/api/book',

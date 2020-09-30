@@ -69,6 +69,13 @@ export default function ModifyGenre({genres, genreIndex}:Props) {
     const deleteGenre = async () => {
         setLoading(true)
 
+        const confirmedDelete = confirm(`Are you sure you want to delete ${values.name}?`)
+
+        if(!confirmedDelete) {
+            setLoading(false)
+            return
+        }
+
         const {status} = await axios({
             method: 'POST',
             url: '/api/genre',
