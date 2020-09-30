@@ -6,6 +6,7 @@ import {ClientDailyEvent, ClientSpanishBite} from '../../database/dbInterfaces'
 import {ensureAuth} from '../../utils/auth'
 
 import styles from '../../styles/Home.module.css'
+import {Box} from '@material-ui/core'
 import Header from '../../components/nav/Header'
 import SideBar from '../../components/nav/SideBar'
 import {bitesItems} from '../../components/nav/navItems'
@@ -32,7 +33,9 @@ export default function Authors({bites, events}:Props) {
                     <SideBar items={bitesItems} selectedIndex={3} />
                 </aside>
                 <main className={styles.main}>
-                    <Calendar bites={bites} events={events} />
+                    <Box mt={1}>
+                        <Calendar bites={bites} events={events} />
+                    </Box>
                 </main>
                 <footer className={styles.footer}>
                     <Footer />
