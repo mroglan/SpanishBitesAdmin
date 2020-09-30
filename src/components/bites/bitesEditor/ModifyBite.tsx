@@ -71,6 +71,13 @@ export default function ModifyBite({authors, bitesIndex, bites}:Props) {
     const deleteBite = async () => {
         setLoading(true)
 
+        const confirmedDelete = confirm(`Are you sure you want to delete ${values.name}?`)
+
+        if(!confirmedDelete) {
+            setLoading(false)
+            return
+        }
+
         const {status} = await axios({
             method: 'POST',
             url: '/api/bite',
