@@ -18,7 +18,7 @@ export default function Authors({authors:dbAuthors, timePeriods}:Props) {
 
     const [{operation, selectedAuthor}, setAction] = useState({operation: 'add', selectedAuthor: -1})
 
-    const {data:authors} = useSWR('/api/author', {initialData: dbAuthors})
+    const {data:authors} = useSWR('/api/author', {initialData: dbAuthors, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return authors?.map(({firstName, lastName, birthDate, deathDate}) => ({

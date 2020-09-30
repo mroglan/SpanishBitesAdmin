@@ -20,7 +20,7 @@ export default function TimePeriods({timePeriods, authors, genres, books:dbBooks
 
     const [{operation, selectedBook}, setAction] = useState({operation: 'add', selectedBook: -1})
 
-    const {data:books} = useSWR('/api/book', {initialData: dbBooks})
+    const {data:books} = useSWR('/api/book', {initialData: dbBooks, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return books?.map(({title, authors:authorIds}) => {

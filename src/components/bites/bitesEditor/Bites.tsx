@@ -18,7 +18,7 @@ export default function Authors({authors, bites:dbBites}:Props) {
 
     const [{operation, selectedBite}, setAction] = useState({operation: 'add', selectedBite: -1})
 
-    const {data:bites} = useSWR('/api/bite', {initialData: dbBites})
+    const {data:bites} = useSWR('/api/bite', {initialData: dbBites, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return bites?.map(({name, dates}) => ({

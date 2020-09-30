@@ -17,7 +17,7 @@ export default function Timegenres({genres:dbGenres}:Props) {
 
     const [{operation, selectedGenre}, setAction] = useState({operation: 'add', selectedGenre: -1})
 
-    const {data:genres} = useSWR('/api/genre', {initialData: dbGenres})
+    const {data:genres} = useSWR('/api/genre', {initialData: dbGenres, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return genres?.map(genre => ({

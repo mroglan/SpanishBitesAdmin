@@ -18,7 +18,7 @@ export default function Passages({passages:dbPassages, books}:Props) {
 
     const [{operation, selectedPassage}, setAction] = useState({operation: 'add', selectedPassage: -1})
 
-    const {data:passages} = useSWR('/api/passage', {initialData: dbPassages})
+    const {data:passages} = useSWR('/api/passage', {initialData: dbPassages, revalidateOnFocus: false})
 
     const listItems = useMemo(() => {
         return passages?.map(({name, book:bookId}) => {
