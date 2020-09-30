@@ -17,6 +17,7 @@ const updateEvent = async (date:string, bite:string) => {
 }
 
 const insertManyEvents = async (events) => {
+    if(events.length === 0) return 
     const dbEvents = events.map(event => ({date: new Date(event.date), bite: new ObjectId(event.bite)}))
 
     const db = await database()
