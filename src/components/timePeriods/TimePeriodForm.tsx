@@ -8,6 +8,7 @@ import EditList from '../items/EditList'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState, useCallback, useMemo, Dispatch} from 'react'
 import draftToHTML from 'draftjs-to-html'
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -38,6 +39,40 @@ const convertToHTML = (data:string) => {
 
 export default function TimePeriodForm({values, valuesDispatch}:Props) {
 
+    const updateTimePeriod = useCallback(async (newValues) => {
+        const valuesCopy = {...newValues}
+        delete valuesCopy._id
+
+        await axios({
+            method: 'POST',
+            url: '/api/timeperiod',
+            data: {
+                operation: 'modify',
+                values: valuesCopy,
+                id: values._id
+            }
+        })
+    }, [])
+
+    const updateAddedEvent = useCallback(async ({scope, eventValues}) => {
+        if(scope === 'spain') return updateTimePeriod({...values, spainEvents: [...values.spainEvents, eventValues]})
+        return updateTimePeriod({...values, worldEvents: [...values.worldEvents, eventValues]})
+    }, [])
+
+    const updateModifiedEvent = useCallback(async ({scope, eventValues, index}) => {
+        const copy = {...values}
+        if(scope === 'spain') copy.spainEvents.splice(index, 1, eventValues)
+        else copy.worldEvents.splice(index, 1, eventValues)
+        return updateTimePeriod(copy)
+    }, [])
+
+    const updateDeletedEvent = useCallback(async ({scope, index}) => {
+        const copy = {...values}
+        if(scope === 'spain') copy.spainEvents.splice(index, 1)
+        else copy.worldEvents.splice(index, 1)
+        return updateTimePeriod(copy)
+    }, [])
+
     const closeIntroModal = () => setIntroModalStates({...introModalStates, open: false})
 
     const [introModalStates, setIntroModalStates] = useState({
@@ -45,6 +80,7 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
         onSave: (value?:string, config?:any) => {
             closeIntroModal()
             if(!value) return
+            if(values._id) updateTimePeriod({...values, intro: value})
             valuesDispatch({type: 'MODIFY_STRING_VALUE', payload: {property: 'intro', value}})
         }
     })
@@ -55,19 +91,22 @@ export default function TimePeriodForm({values, valuesDispatch}:Props) {
         setEventStates({...eventStates, open: false})
     }, [])
 
-    const addEvent = useCallback((values:Event, index?:number, scope?:string) => {
+    const addEvent = useCallback((eventValues:Event, index?:number, scope?:string) => {
         closeModal()
-        if(!values) return
-        valuesDispatch({type: 'ADD_EVENT', payload: {scope, values}})
+        if(!eventValues) return
+        if(values._id) updateAddedEvent({scope, eventValues})
+        valuesDispatch({type: 'ADD_EVENT', payload: {scope, values: eventValues}})
     }, [])
 
-    const modifyEvent = useCallback((values:Event, index?:number, scope?:string) => {
+    const modifyEvent = useCallback((eventValues:Event, index?:number, scope?:string) => {
         closeModal()
-        if(!values) return
-        valuesDispatch({type: 'MODIFY_EVENT', payload: {scope, values, index}})
+        if(!eventValues) return
+        if(values._id) updateModifiedEvent({scope, eventValues, index})
+        valuesDispatch({type: 'MODIFY_EVENT', payload: {scope, values: eventValues, index}})
     }, [])
 
     const removeEvent = useCallback((index:number, scope:string) => {
+        if(values._id) updateDeletedEvent({scope, index})
         valuesDispatch({type: 'DELETE_EVENT', payload: {scope, index}})
     }, [])
 
