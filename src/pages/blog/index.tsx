@@ -1,7 +1,15 @@
+import Head from 'next/head'
 
+export default function Blog() {
 
-export default function Test() {
     return (
-        <div>hello world</div>
+        <>
+            <Head>
+                <title>Blog | Spanish Bites Admin</title>
+            </Head>
+            <div>
+                hello, this is where the blog goes!
+            </div>
+        </>
     )
 }
