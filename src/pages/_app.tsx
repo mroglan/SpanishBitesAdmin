@@ -42,7 +42,29 @@ export const theme = createMuiTheme({
     },
 
   },
-  spacing: 8
+  spacing: 8,
+  overrides: {
+    MuiStepIcon: {
+      root: {
+        '&$completed': {
+            color: 'hsl(229, 100%, 81%)',
+        },
+        '&$active': {
+            color: 'hsl(229, 100%, 58%)',
+        }
+      },
+      text: {
+          fill: '#fff'
+      },
+      active: {},
+      completed: {}
+    },
+    MuiStepper: {
+        root: {
+            background: 'hsl(50, 100%, 97%)'
+        }
+    }
+  }
 });
 
 export default class MyApp extends App {
