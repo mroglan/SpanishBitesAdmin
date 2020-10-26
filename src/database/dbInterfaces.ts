@@ -161,3 +161,19 @@ export interface ClientDailyEvent {
     bite: string;
     _id: string;
 }
+
+
+export interface BlogPost {
+    title: string;
+    subtitle: string;
+    content: string;
+    releaseDate: string;
+}
+
+export interface DBBlogPost extends BlogPost {
+    _id: ObjectId;
+}
+
+export interface ClientBlogPost extends BlogPost {
+    _id: string;
+}
