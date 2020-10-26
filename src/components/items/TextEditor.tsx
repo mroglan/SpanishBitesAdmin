@@ -122,3 +122,23 @@ export function AdvancedTextEditor({value, onSave, inputId, config, inputRef}:Ad
         </ThemeProvider>
     )
 }
+
+interface BlogProps {
+    value: string;
+    onSave: (val:string) => void;
+    inputRef: any;
+}
+
+export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add parameter for custom controls
+
+    const [defaultVal, setDefaultVal] = useState(value)
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Box>
+                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={advancedControls} 
+                onSave={(data) => onSave(data)} ref={inputRef} /> 
+            </Box>
+        </ThemeProvider>
+    )
+}
