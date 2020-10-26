@@ -1,14 +1,17 @@
 import {Box, Typography} from '@material-ui/core'
 import PostForm from './PostForm'
-
-const initialValues = {
-    title: '',
-    subtitle: '',
-    releaseDate: '',
-    content: ''
-}
+import * as dateFns from 'date-fns' 
 
 export default function NewPost() {
+
+    const nextDay = dateFns.format(dateFns.addDays(new Date(Date.now()), 1), 'yyyy-MM-dd')
+    
+    const initialValues = {
+        title: '',
+        subtitle: '',
+        releaseDate: nextDay,
+        content: ''
+    }
 
     return (
         <div>
