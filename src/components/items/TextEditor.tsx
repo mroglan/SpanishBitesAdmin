@@ -1,5 +1,5 @@
 import MUIRichTextEditor from 'mui-rte'
-import {createMuiTheme, ThemeProvider, Box, Button} from '@material-ui/core'
+import {createMuiTheme, ThemeProvider, Box, Button, Typography} from '@material-ui/core'
 import {useState, useEffect, useMemo, useRef} from 'react'
 import {EditorState, convertToRaw} from 'draft-js'
 import AdbIcon from '@material-ui/icons/Adb';
@@ -131,12 +131,14 @@ interface BlogProps {
 }
 
 const blogControls = [
-    "bold", "italic", "underline", "strikethrough", "highlight",
+    "h4", "h5", "h6", "bold", "italic", "underline", "strikethrough", "highlight",
     "link", "media", "numberList", "bulletList", "quote", "undo", "redo",
 ]
 
 const blogCustomControls:any = [
-    {name: 'h1', icon: 'h1', type: 'inline', inlineStyle: {fontSize: 20}}
+    {name: 'h4', icon: <Typography variant="h6">h4</Typography> , type: 'block', blockWrapper: <Typography variant="h4"  style={{margin: '25px 0 5px 0'}} />},
+    {name: 'h5', icon: <Typography variant="h6">h5</Typography>, type: 'block', blockWrapper: <Typography variant="h5" style={{margin: '20px 0 5px 0'}} /> },
+    {name: 'h6', icon: <Typography variant="h6">h6</Typography>, type: 'block', blockWrapper: <Typography variant="h6" style={{margin: '10px 0 0 0'}} /> }
 ]
 
 export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add parameter for custom controls
@@ -146,8 +148,8 @@ export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add par
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={blogControls} customControls={blogCustomControls}
-                onSave={(data) => onSave(data)} ref={inputRef} inlineToolbar={true} inlineToolbarControls={['h1']} inheritFontSize
+                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={blogControls} 
+                customControls={blogCustomControls} onSave={(data) => onSave(data)} ref={inputRef}
                  /> 
             </Box>
         </ThemeProvider>
