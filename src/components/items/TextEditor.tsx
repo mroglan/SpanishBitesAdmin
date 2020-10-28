@@ -1,7 +1,8 @@
 import MUIRichTextEditor from 'mui-rte'
-import {createMuiTheme, ThemeProvider, Box} from '@material-ui/core'
+import {createMuiTheme, ThemeProvider, Box, Button} from '@material-ui/core'
 import {useState, useEffect, useMemo, useRef} from 'react'
 import {EditorState, convertToRaw} from 'draft-js'
+import AdbIcon from '@material-ui/icons/Adb';
 
 const theme = createMuiTheme()
 
@@ -23,7 +24,7 @@ Object.assign(theme, {
             editorContainer: {
                 paddingLeft: '.5rem',
                 paddingRight: '.5rem',
-                fontSize: '1.1rem', 
+                fontSize: '16px', 
                 lineHeight: 1.5,
                 marginBottom: 16,
                 '& a': {
@@ -129,6 +130,15 @@ interface BlogProps {
     inputRef: any;
 }
 
+const blogControls = [
+    "bold", "italic", "underline", "strikethrough", "highlight",
+    "link", "media", "numberList", "bulletList", "quote", "undo", "redo",
+]
+
+const blogCustomControls:any = [
+    {name: 'h1', icon: 'h1', type: 'inline', inlineStyle: {fontSize: 20}}
+]
+
 export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add parameter for custom controls
 
     const [defaultVal, setDefaultVal] = useState(value)
@@ -136,8 +146,9 @@ export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add par
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={advancedControls} 
-                onSave={(data) => onSave(data)} ref={inputRef} /> 
+                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={blogControls} customControls={blogCustomControls}
+                onSave={(data) => onSave(data)} ref={inputRef} inlineToolbar={true} inlineToolbarControls={['h1']} inheritFontSize
+                 /> 
             </Box>
         </ThemeProvider>
     )
