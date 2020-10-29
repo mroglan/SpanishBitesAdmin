@@ -25,6 +25,8 @@ const valuesReducer = (state:Values, {type, payload}) => {
             return {...state, title: payload}
         case 'CHANGE_SUBTITLE':
             return {...state, subtitle: payload}
+        case 'CHANGE_KEYWORDS':
+            return {...state, keyWords: payload}
         case 'CHANGE_DATE':
             return {...state, releaseDate: payload}
         case 'CHANGE_CONTENT':
