@@ -5,6 +5,7 @@ import {Box} from '@material-ui/core'
 import {useReducer} from 'react'
 import BasicInfoStep from './BasicInfoStep'
 import ContentStep from './ContentStep'
+import ReviewStep from './ReviewStep'
 
 export interface Values extends BlogPost {
     _id?: string;
@@ -48,7 +49,8 @@ export default function PostForm({values:initialVals}:Props) {
             </Box>
             <Box>
                 {section === 0 ? <BasicInfoStep values={values} dispatch={valuesDispatch} /> : 
-                section === 1 ? <ContentStep values={values} dispatch={valuesDispatch} /> : ''}
+                section === 1 ? <ContentStep values={values} dispatch={valuesDispatch} /> : 
+                <ReviewStep values={values} /> }
             </Box>
         </Box>
     )
