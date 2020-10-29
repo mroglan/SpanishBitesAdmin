@@ -1,5 +1,5 @@
 import {Values} from './PostForm'
-import {Dispatch, SetStateAction} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import {Box, TextField} from '@material-ui/core'
 
 interface Props {
@@ -8,6 +8,10 @@ interface Props {
 }
 
 export default function BasicInfoStep({values, dispatch}:Props) {
+
+    const keyWordsRef = useRef<HTMLInputElement>()
+
+    useEffect(() => () => dispatch({type: 'CHANGE_KEYWORDS', payload: keyWordsRef.current.value.split(',').map(word => word.trim())}), [])
 
     return (
         <Box maxWidth={500} mx="auto">
@@ -18,6 +22,10 @@ export default function BasicInfoStep({values, dispatch}:Props) {
             <Box my={3}>
                 <TextField variant="outlined" color="secondary" label="Subtitle" fullWidth value={values.subtitle}
                 onChange={(e) => dispatch({type: 'CHANGE_SUBTITLE', payload: e.target.value})} multiline rows={3} />
+            </Box>
+            <Box my={3}>
+                <TextField variant="outlined" color="secondary" label="Key Words" fullWidth  inputRef={keyWordsRef}
+                defaultValue={values.keyWords.join(', ')} multiline />
             </Box>
             <Box my={3}>
                 <TextField variant="outlined" color="secondary" label="Release Date" fullWidth value={values.releaseDate}
