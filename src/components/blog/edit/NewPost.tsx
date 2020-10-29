@@ -10,7 +10,8 @@ export default function NewPost() {
         title: '',
         subtitle: '',
         releaseDate: nextDay,
-        content: ''
+        content: '',
+        keyWords: []
     }
 
     return (
