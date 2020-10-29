@@ -155,3 +155,20 @@ export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add par
         </ThemeProvider>
     )
 }
+
+interface TextDisplayProps {
+    text: string;
+}
+
+export function TextDisplay({text}:TextDisplayProps) {
+
+    const [ready, setReady] = useState(false)
+
+    useEffect(() => setReady(true), [])
+
+    return (
+        <Box>
+            {ready && <MUIRichTextEditor customControls={blogCustomControls} controls={[]} defaultValue={text} readOnly />}
+        </Box>
+    )
+}
