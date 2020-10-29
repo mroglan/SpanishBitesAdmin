@@ -168,6 +168,7 @@ export interface BlogPost {
     subtitle: string;
     content: string;
     releaseDate: string;
+    keyWords: string[];
 }
 
 export interface DBBlogPost extends BlogPost {
