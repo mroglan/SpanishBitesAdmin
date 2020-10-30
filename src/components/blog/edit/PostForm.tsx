@@ -1,6 +1,6 @@
 import {BlogPost} from '../../../database/dbInterfaces'
 import {useState, useCallback} from 'react'
-import Wizard from '../../items/FormWizard'
+import Wizard from '../../forms/FormWizard'
 import {Box} from '@material-ui/core'
 import {useReducer} from 'react'
 import BasicInfoStep from './BasicInfoStep'
