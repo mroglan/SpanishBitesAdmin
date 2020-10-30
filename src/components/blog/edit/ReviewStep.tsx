@@ -9,9 +9,10 @@ import Router from 'next/router'
 
 interface Props {
     values: Values;
+    mode: string; // either "create" or "update"
 }
 
-export default function ReviewStep({values}:Props) {
+export default function ReviewStep({values, mode}:Props) {
 
     const [loading, setLoading] = useState(false)
 
@@ -23,7 +24,7 @@ export default function ReviewStep({values}:Props) {
 
         const {status} = await axios({
             method: 'POST',
-            url: '/api/blog/create',
+            url: `/api/blog/${mode}`,
             data: {
                 values
             }
@@ -75,7 +76,7 @@ export default function ReviewStep({values}:Props) {
             </Box>
             <Box mt={3} textAlign="center">
                 <SuccessButton onClick={() => createBlogPost()} disabled={loading}>
-                    Create Blog Post
+                    {mode} Blog Post
                 </SuccessButton>
             </Box>
             <SnackbarMessage message={message} setMessage={setMessage} />

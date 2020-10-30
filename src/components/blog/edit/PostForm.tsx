@@ -13,6 +13,7 @@ export interface Values extends BlogPost {
 
 interface Props {
     values: Values;
+    mode: string;
 }
 
 const sections = [
@@ -36,7 +37,7 @@ const valuesReducer = (state:Values, {type, payload}) => {
     }
 }
 
-export default function PostForm({values:initialVals}:Props) {
+export default function PostForm({values:initialVals, mode}:Props) {
 
     const [values, valuesDispatch] = useReducer(valuesReducer, initialVals)
 
@@ -52,7 +53,7 @@ export default function PostForm({values:initialVals}:Props) {
             <Box>
                 {section === 0 ? <BasicInfoStep values={values} dispatch={valuesDispatch} /> : 
                 section === 1 ? <ContentStep values={values} dispatch={valuesDispatch} /> : 
-                <ReviewStep values={values} /> }
+                <ReviewStep values={values} mode={mode} /> }
             </Box>
         </Box>
     )

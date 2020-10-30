@@ -22,7 +22,7 @@ export default function NewPost() {
                 </Typography>
             </Box>
             <Box mt={1}>
-                <PostForm values={initialValues} />
+                <PostForm mode="create" values={initialValues} />
             </Box>
         </div>
     )
