@@ -1,8 +1,9 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import database from '../../../database/database'
 import {createBlogPost} from '../../../utils/blogPosts'
+import {verifyAdmin} from '../../../utils/auth'
 
-export default async function CreateBlog(req:NextApiRequest, res:NextApiResponse) {
+export default verifyAdmin(async function CreateBlog(req:NextApiRequest, res:NextApiResponse) {
 
     try {
 
@@ -13,4 +14,4 @@ export default async function CreateBlog(req:NextApiRequest, res:NextApiResponse
 
         return res.status(500).json({msg: 'Internal Server Error'})
     }
-}
+})
