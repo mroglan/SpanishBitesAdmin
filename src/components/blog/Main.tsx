@@ -3,12 +3,19 @@ import {SuccessButton, ErrorButton} from '../items/buttons'
 import PostList from './PostList'
 import {ClientBlogPost} from '../../database/dbInterfaces'
 import useSWR from 'swr'
+import Router from 'next/router'
 
 interface Props {
     posts: ClientBlogPost[];
 }
 
 export default function Main({posts}:Props) {
+
+    const handleNewPost = () => {
+        Router.push({
+            pathname: '/blog/create'
+        })
+    }
 
     return (
         <Box>
@@ -20,7 +27,7 @@ export default function Main({posts}:Props) {
             <Box>
                 <Grid container spacing={3} justify="center">
                     <Grid item>
-                        <SuccessButton>
+                        <SuccessButton onClick={handleNewPost}>
                             New Post
                         </SuccessButton>
                     </Grid>
