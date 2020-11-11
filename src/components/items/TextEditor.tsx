@@ -1,7 +1,8 @@
 import MUIRichTextEditor from 'mui-rte'
-import {createMuiTheme, ThemeProvider, Box} from '@material-ui/core'
+import {createMuiTheme, ThemeProvider, Box, Button, Typography} from '@material-ui/core'
 import {useState, useEffect, useMemo, useRef} from 'react'
 import {EditorState, convertToRaw} from 'draft-js'
+import AdbIcon from '@material-ui/icons/Adb';
 
 const theme = createMuiTheme()
 
@@ -23,7 +24,7 @@ Object.assign(theme, {
             editorContainer: {
                 paddingLeft: '.5rem',
                 paddingRight: '.5rem',
-                fontSize: '1.1rem', 
+                fontSize: '16px', 
                 lineHeight: 1.5,
                 marginBottom: 16,
                 '& a': {
@@ -120,5 +121,54 @@ export function AdvancedTextEditor({value, onSave, inputId, config, inputRef}:Ad
                 onSave={(data) => onSave(data, config)} ref={inputRef} /> }
             </Box>
         </ThemeProvider>
+    )
+}
+
+interface BlogProps {
+    value: string;
+    onSave: (val:string) => void;
+    inputRef: any;
+}
+
+const blogControls = [
+    "h4", "h5", "h6", "bold", "italic", "underline", "strikethrough", "highlight",
+    "link", "media", "numberList", "bulletList", "quote", "undo", "redo",
+]
+
+const blogCustomControls:any = [
+    {name: 'h4', icon: <Typography variant="h6">h4</Typography> , type: 'block', blockWrapper: <Typography variant="h4"  style={{margin: '25px 0 5px 0'}} />},
+    {name: 'h5', icon: <Typography variant="h6">h5</Typography>, type: 'block', blockWrapper: <Typography variant="h5" style={{margin: '20px 0 5px 0'}} /> },
+    {name: 'h6', icon: <Typography variant="h6">h6</Typography>, type: 'block', blockWrapper: <Typography variant="h6" style={{margin: '10px 0 0 0'}} /> }
+]
+
+export function BlogTextEditor({value, onSave, inputRef}:BlogProps) { // add parameter for custom controls
+
+    const [defaultVal, setDefaultVal] = useState(value)
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Box>
+                <MUIRichTextEditor label="Start typing..." defaultValue={defaultVal} controls={blogControls} 
+                customControls={blogCustomControls} onSave={(data) => onSave(data)} ref={inputRef}
+                 /> 
+            </Box>
+        </ThemeProvider>
+    )
+}
+
+interface TextDisplayProps {
+    text: string;
+}
+
+export function TextDisplay({text}:TextDisplayProps) {
+
+    const [ready, setReady] = useState(false)
+
+    useEffect(() => setReady(true), [])
+
+    return (
+        <Box>
+            {ready && <MUIRichTextEditor customControls={blogCustomControls} controls={[]} defaultValue={text} readOnly />}
+        </Box>
     )
 }

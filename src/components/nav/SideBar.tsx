@@ -27,14 +27,6 @@ const useStyles = makeStyles(theme => ({
     selectedItem: {}
 }))
 
-const menuItems = [
-    {name: 'Time Periods', link: '/timeperiods'},
-    {name: 'Authors', link: '/authors'},
-    {name: 'Genres', link: '/genres'},
-    {name: 'Books', link: '/books'},
-    {name: 'Passages', link: '/passages'}
-]
-
 interface Props {
     selectedIndex: number;
     items: {name: string; link: string}[]

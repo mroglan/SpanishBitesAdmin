@@ -79,7 +79,7 @@ export default function Header({selectedIndex, items}:Props) {
                 </Grid>
                 <Box flexGrow={1} />
                 <Box>
-                    {smallScreen ? <DrawerNav items={items} selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
+                    {smallScreen && items.length ? <DrawerNav items={items} selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
                     <Typography variant="button">
                         Logout
                     </Typography></Button>}

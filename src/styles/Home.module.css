@@ -9,6 +9,10 @@
   grid-column: 2 / 3;
 }
 
+.full-main {
+  grid-column: 1 / span 2;
+}
+
 .footer {
   grid-column: 1 / 3;
 }
