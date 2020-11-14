@@ -1,5 +1,4 @@
-import { CssBaseline } from '@material-ui/core';
-import red from '@material-ui/core/colors/red';
+import { CssBaseline, Box } from '@material-ui/core';
 import amber from '@material-ui/core/colors/amber'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import App from 'next/app';
@@ -7,6 +6,23 @@ import Head from 'next/head';
 import React from 'react';
 import axios from 'axios'
 import {SWRConfig} from 'swr'
+import Nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
+import Router from 'next/dist/client/router'
+
+Nprogress.configure({showSpinner: false})
+
+Router.events.on('routeChangeStart', () => {
+    Nprogress.start()
+})
+
+Router.events.on('routeChangeComplete', () => {
+     Nprogress.done()
+})
+
+Router.events.on('routeChangeError', () => {
+    Nprogress.done()
+})
 
 axios.defaults.baseURL = process.env.BASE_URL
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -88,16 +104,17 @@ export default class MyApp extends App {
           />
         </Head>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
             <style jsx global>{`
               #nprogress .bar {
-                background: hsl(301, 77%, 40%);
-                height: .2rem
+                padding: 1px;
+                z-index: 1500;
               }
             `}</style>
             <SWRConfig value={{fetcher}}>
-              <Component {...pageProps} />
+              <Box>
+                <Component {...pageProps} />
+              </Box>
             </SWRConfig>
         </ThemeProvider>
       </React.Fragment>
