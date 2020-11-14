@@ -75,7 +75,7 @@ export default function ReviewStep({values, mode}:Props) {
                 </Box>
             </Box>
             <Box mt={3} textAlign="center">
-                <SuccessButton onClick={() => createBlogPost()} disabled={loading}>
+                <SuccessButton variant="outlined" onClick={() => createBlogPost()} disabled={loading}>
                     {mode} Blog Post
                 </SuccessButton>
             </Box>

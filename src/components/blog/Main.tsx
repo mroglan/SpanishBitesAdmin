@@ -26,7 +26,7 @@ export default function Main({posts}:Props) {
             <Box>
                 <Grid container spacing={3} justify="center">
                     <Grid item>
-                        <SuccessButton onClick={handleNewPost}>
+                        <SuccessButton variant="outlined" onClick={handleNewPost}>
                             New Post
                         </SuccessButton>
                     </Grid>
