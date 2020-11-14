@@ -79,6 +79,12 @@ export const theme = createMuiTheme({
         root: {
             background: 'hsl(50, 100%, 97%)'
         }
+    },
+    MuiDialogActions: {
+      root: {
+        justifyContent: 'flex-start',
+        padding: '8px 24px'
+      }
     }
   }
 });
