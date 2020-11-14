@@ -22,6 +22,13 @@ export const createBlogPost = async(values:Values) => {
     await db.collection('blogPosts').insertOne({...cleanedValues})
 }
 
+export const deleteBlogPost = async (id:string) => {
+
+    const db = await database()
+
+    await db.collection('blogPosts').deleteOne({'_id': new ObjectId(id)})
+}
+
 export const getAllPosts = async () => {
 
     const db = await database()
