@@ -7,7 +7,7 @@ export default verifyAdmin(async function Blog(req:NextApiRequest, res:NextApiRe
     try {
 
         if(req.method === 'GET') {
-            const posts = getAllPosts()
+            const posts = await getAllPosts()
             return res.status(200).json(posts)
         }
 
