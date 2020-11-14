@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     },
     appbar: {
         background: theme.palette.primary.main,
-        color: '#000'
+        color: '#000',
     },
     logo: {
         height: 40,
