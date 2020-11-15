@@ -194,26 +194,6 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                 ))}
             </Box>
             <Divider />
-            {/* <Box my={1}>
-                <Box>
-                    <Grid container spacing={1} wrap="nowrap" alignItems="center">
-                        <Grid item>
-                            <Typography variant="body1">
-                                Influences
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <SuccessIconButton onClick={() => openModal('create', 'influences', -1)}>
-                                <AddCircleIcon />
-                            </SuccessIconButton>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <Box mt={-2}>
-                    <EditList items={influencesListItems} onDeleteClick={(i:number) => removeReference(i, 'influences')}
-                    onEditClick={(i:number) => openModal('modify', 'influences', i)} />
-                </Box>
-            </Box> */}
             <Divider />
             <Box my={1}>
                 <Box>
