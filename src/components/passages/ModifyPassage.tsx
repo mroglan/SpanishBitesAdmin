@@ -44,22 +44,24 @@ export default function ModifyPassage({books, passageIndex, passages}:Props) {
         const valueCopy = {...values}
         delete valueCopy._id
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/passage',
-            data: {
-                operation: 'modify',
-                values: valueCopy,
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/passage',
+                data: {
+                    operation: 'modify',
+                    values: valueCopy,
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
+
+        setLoading(false)
+
         setMessage({type: 'success', content: 'Changes Saved'})
         const passagesCopy = [...passages]
         passagesCopy[passageIndex] = values
@@ -77,21 +79,23 @@ export default function ModifyPassage({books, passageIndex, passages}:Props) {
             return
         }
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/passage',
-            data: {
-                operation: 'delete',
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/passage',
+                data: {
+                    operation: 'delete',
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error deleting'})
             return
         }
+
+        setLoading(false)
+
         setMessage({type: 'success', content: 'Passage Deleted'})
 
         valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
