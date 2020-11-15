@@ -59,7 +59,7 @@ export default function AddBite({authors, bites}:Props) {
 
             setLoading(false)
 
-            setMessage({type: 'success', content: 'Author Created'})
+            setMessage({type: 'success', content: 'Bite Created'})
             valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
             mutate('/api/bite', [...bites, bite], false)
         } catch(e) {
