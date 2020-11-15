@@ -45,22 +45,23 @@ export default function ModifyBite({authors, bitesIndex, bites}:Props) {
         const valueCopy = {...values}
         delete valueCopy._id
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/bite',
-            data: {
-                operation: 'modify',
-                values: valueCopy,
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/bite',
+                data: {
+                    operation: 'modify',
+                    values: valueCopy,
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
+        setLoading(false)
+
         setMessage({type: 'success', content: 'Changes Saved'})
         const bitesCopy = [...bites]
         bitesCopy[bitesIndex] = values
@@ -78,21 +79,23 @@ export default function ModifyBite({authors, bitesIndex, bites}:Props) {
             return
         }
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/bite',
-            data: {
-                operation: 'delete',
-                id: values._id
-            }
-        })
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/bite',
+                data: {
+                    operation: 'delete',
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
 
-        setLoading(false)
-
-        if(status !== 200) {
             setMessage({type: 'error', content: 'Error deleting'})
             return
         }
+        setLoading(false)
+        
         setMessage({type: 'success', content: 'Bite Deleted'})
 
         valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
