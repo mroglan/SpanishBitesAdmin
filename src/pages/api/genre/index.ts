@@ -1,29 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
-import {Genre, DBGenre} from '../../../database/dbInterfaces'
-import {getAllGenres} from '../../../utils/genres'
+import {getAllGenres, addGenre, modifyGenre, deleteGenre} from '../../../utils/genres'
 import {verifyAdmin} from '../../../utils/auth'
-import {ObjectId} from 'mongodb'
-
-const addGenre = async (values:Genre) => {
-    const db = await database()
-
-    const dbOperation = await db.collection('genres').insertOne(values)
-
-    return <DBGenre>dbOperation.ops[0]
-}
-
-const modifyGenre = async (id: string, values:Genre) => {
-    const db = await database()
-
-    await db.collection('genres').updateOne({'_id': new ObjectId(id)}, {'$set': {...values}})
-}
-
-const deleteGenre = async (id:string) => {
-    const db = await database()
-
-    await db.collection('genres').deleteOne({'_id': new ObjectId(id)})
-}
 
 export default verifyAdmin(async function genre(req:NextApiRequest, res:NextApiResponse) {
 
