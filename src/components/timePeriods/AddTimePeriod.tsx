@@ -43,24 +43,26 @@ export default function AddTimePeriod({periods}:Props) {
     const createTimePeriod = async () => {
         setLoading(true)
 
-        const {data: {period}, status} = await axios({
-            method: 'POST',
-            url: '/api/timeperiod',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {period}} = await axios({
+                method: 'POST',
+                url: '/api/timeperiod',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
 
-        setLoading(false)
+            setLoading(false)
 
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Time Period Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/timeperiod', [...periods, period], false)
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
-        setMessage({type: 'success', content: 'Time Period Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/timeperiod', [...periods, period], false)
     }
 
     const classes = useStyles()
