@@ -47,25 +47,27 @@ export default function AddBite({authors, bites}:Props) {
     const createBite = async () => {
         setLoading(true)
 
-        const {data: {bite}, status} = await axios({
-            method: 'POST',
-            url: '/api/bite',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {bite}, status} = await axios({
+                method: 'POST',
+                url: '/api/bite',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
 
-        setLoading(false)
+            setLoading(false)
 
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Author Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/bite', [...bites, bite], false)
+        } catch(e) {
+            setLoading(false)
+
             setMessage({type: 'error', content: 'Error Saving'})
             return 
         }
-
-        setMessage({type: 'success', content: 'Author Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/bite', [...bites, bite], false)
     }   
 
     const classes = useStyles()
