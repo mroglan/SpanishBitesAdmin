@@ -22,23 +22,22 @@ export default function ReviewStep({values, mode}:Props) {
         
         setLoading(true)
 
-        const {status} = await axios({
-            method: 'POST',
-            url: `/api/blog/${mode}`,
-            data: {
-                values
-            }
-        })
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/blog/${mode}`,
+                data: {
+                    values
+                }
+            })
+            Router.push({
+                pathname: '/blog'
+            })
+        } catch(e) {
             setMessage({type: 'error', content: 'Error Saving'})
             setLoading(false)
             return
         }
-
-        Router.push({
-            pathname: '/blog'
-        })
     }
 
     return (
