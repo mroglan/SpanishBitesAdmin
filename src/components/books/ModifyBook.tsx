@@ -46,22 +46,23 @@ export default function ModifyBook({books, bookIndex, timePeriods, authors, genr
         const valuesCopy = {...values}
         delete valuesCopy._id
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/book',
-            data: {
-                operation: 'modify',
-                values: valuesCopy,
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/book',
+                data: {
+                    operation: 'modify',
+                    values: valuesCopy,
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
+
+        setLoading(false)
 
         setMessage({type: 'success', content: 'Changes Saved'})
         const booksCopy = [...books]
@@ -80,18 +81,17 @@ export default function ModifyBook({books, bookIndex, timePeriods, authors, genr
             return
         }
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/book',
-            data: {
-                operation: 'delete',
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/book',
+                data: {
+                    operation: 'delete',
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Deleting'})
             return
         }
