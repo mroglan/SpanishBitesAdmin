@@ -1,31 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
-import {ClientSpanishBite, DBSpanishBite} from '../../../database/dbInterfaces'
-import {getAllBites} from '../../../utils/bites'
+import {getAllBites, createBite, modifyBite, deleteBite} from '../../../utils/bites'
 import {verifyAdmin} from '../../../utils/auth'
-import {ObjectId} from 'mongodb'
-
-interface Values extends Omit<ClientSpanishBite, '_id'> {}
-
-const createBite = async (values:Values) => {
-    const db = await database()
-
-    const dbOperation = await db.collection('bites').insertOne(values)
-
-    return <DBSpanishBite>dbOperation.ops[0]
-}
-
-const modifyBite = async (id:string, values:Values) => {
-    const db = await database()
-
-    await db.collection('bites').updateOne({'_id': new ObjectId(id)}, {'$set': {...values}})
-}
-
-const deleteBite = async (id:string) => {
-    const db = await database()
-
-    await db.collection('bites').deleteOne({'_id': new ObjectId(id)})
-}
 
 export default verifyAdmin(async function bite(req:NextApiRequest, res:NextApiResponse) {
 
