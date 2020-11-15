@@ -106,17 +106,19 @@ export default function Calendar({bites, events:dbEvents}:Props) {
             day = dateFns.addDays(day, 1)
         }
 
-        await axios({
-            method: 'POST',
-            url: '/api/dailyevent',
-            data: {
-                operation: 'insertMany',
-                events: newEvents
-            }
-        })
-
-        trigger('/api/dailyevent')
-
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/dailyevent',
+                data: {
+                    operation: 'insertMany',
+                    events: newEvents
+                }
+            })
+    
+            trigger('/api/dailyevent')
+        } catch(e) {}
+        
         setDisableAutofill(false)
     }
 
