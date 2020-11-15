@@ -39,25 +39,26 @@ export default function AddGenre({genres}:Props) {
     const createGenre = async () => {
         setLoading(true)
 
-        const {data: {genre}, status} = await axios({
-            method: 'POST',
-            url: '/api/genre',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {genre}} = await axios({
+                method: 'POST',
+                url: '/api/genre',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
 
-        setLoading(false)
+            setLoading(false)
 
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Genre Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/genre', [...genres, genre], false)
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
-
-        setMessage({type: 'success', content: 'Genre Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/genre', [...genres, genre], false)
     }
 
     const classes = useStyles()
