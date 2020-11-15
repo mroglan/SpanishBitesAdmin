@@ -48,25 +48,26 @@ export default function AddPassage({passages, books}:Props) {
     const createPassage = async () => {
         setLoading(true)
 
-        const {data: {passage}, status} = await axios({
-            method: 'POST',
-            url: '/api/passage',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {passage}} = await axios({
+                method: 'POST',
+                url: '/api/passage',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
 
-        setLoading(false)
+            setLoading(false)
 
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Passage Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/passage', [...passages, passage], false)
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return 
         }
-
-        setMessage({type: 'success', content: 'Passage Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/passage', [...passages, passage], false)
     }
 
     const classes = useStyles()
