@@ -43,22 +43,24 @@ export default function ModifyGenre({genres, genreIndex}:Props) {
         const valueCopy = {...values}
         delete valueCopy._id
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/genre',
-            data: {
-                operation: 'modify',
-                values: valueCopy,
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/genre',
+                data: {
+                    operation: 'modify',
+                    values: valueCopy,
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
+
+        setLoading(false)
+
         setMessage({type: 'success', content: 'Changes Saved'})
         const genresCopy = [...genres]
         genresCopy[genreIndex] = values
@@ -76,21 +78,23 @@ export default function ModifyGenre({genres, genreIndex}:Props) {
             return
         }
 
-        const {status} = await axios({
-            method: 'POST',
-            url: '/api/genre',
-            data: {
-                operation: 'delete',
-                id: values._id
-            }
-        })
-
-        setLoading(false)
-
-        if(status !== 200) {
+        try {
+            await axios({
+                method: 'POST',
+                url: '/api/genre',
+                data: {
+                    operation: 'delete',
+                    id: values._id
+                }
+            })
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error deleting'})
             return
         }
+
+        setLoading(false)
+
         setMessage({type: 'success', content: 'Time Period Deleted'})
 
         valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
