@@ -1,37 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
-import {ClientPassage, DBPassage} from '../../../database/dbInterfaces'
-import {getAllPassages} from '../../../utils/passages'
+import {getAllPassages, createPassage, modifyPassage, deletePassage} from '../../../utils/passages'
 import {verifyAdmin} from '../../../utils/auth'
-import {ObjectId} from 'mongodb'
-
-interface Values extends Omit<ClientPassage, '_id'> {}
-
-const objectifyValues = (values:Values) => {
-    if(!values.book) return values
-
-    return {...values, book: new ObjectId(values.book)}
-}
-
-const createPassage = async (values:Values) => {
-    const db = await database()
-
-    const dbOperation = await db.collection('passages').insertOne(objectifyValues(values))
-
-    return <DBPassage>dbOperation.ops[0]
-}
-
-const modifyPassage = async (id:string, values:Values) => {
-    const db = await database()
-
-    await db.collection('passages').updateOne({'_id': new ObjectId(id)}, {'$set': {...objectifyValues(values)}})
-}
-
-const deletePassage = async (id:string) => {
-    const db = await database()
-
-    await db.collection('passages').deleteOne({'_id': new ObjectId(id)})
-}
 
 export default verifyAdmin(async function passage(req:NextApiRequest, res:NextApiResponse) {
 
