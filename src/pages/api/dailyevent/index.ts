@@ -1,29 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
-import {ClientDailyEvent} from '../../../database/dbInterfaces'
-import {getAllDailyEvents} from '../../../utils/dailyEvents'
+import {getAllDailyEvents, updateEvent, insertManyEvents} from '../../../utils/dailyEvents'
 import {verifyAdmin} from '../../../utils/auth'
-import { ObjectId } from 'mongodb'
-
-interface Event {
-    date: string;
-    bite: string;
-}
-
-const updateEvent = async (date:string, bite:string) => {
-    const db = await database()
-
-    await db.collection('dailyEvents').updateOne({'date': new Date(date)}, {'$set': {'bite': new ObjectId(bite)}}, {upsert: true})
-}
-
-const insertManyEvents = async (events) => {
-    if(events.length === 0) return 
-    const dbEvents = events.map(event => ({date: new Date(event.date), bite: new ObjectId(event.bite)}))
-
-    const db = await database()
-
-    await db.collection('dailyEvents').insertMany(dbEvents)
-}
 
 export default verifyAdmin(async function dailyEvent(req:NextApiRequest, res:NextApiResponse) {
 
