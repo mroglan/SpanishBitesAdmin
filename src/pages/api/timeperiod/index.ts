@@ -1,29 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
-import {TimePeriod, DBTimePeriod} from '../../../database/dbInterfaces'
-import {getAllTimePeriods} from '../../../utils/timePeriods'
+import {getAllTimePeriods, addTimePeriod, modifyTimePeriod, deleteTimePeriod} from '../../../utils/timePeriods'
 import {verifyAdmin} from '../../../utils/auth'
-import {ObjectId} from 'mongodb'
-
-const addTimePeriod = async (values:TimePeriod) => {
-    const db = await database()
-
-    const dbOperation = await db.collection('timePeriods').insertOne(values)
-
-    return <DBTimePeriod>dbOperation.ops[0]
-}
-
-const modifyTimePeriod = async (id:string, values:TimePeriod) => {
-    const db = await database()
-
-    await db.collection('timePeriods').updateOne({'_id': new ObjectId(id)}, {'$set': {...values}})
-}
-
-const deleteTimePeriod = async (id:string) => {
-    const db = await database()
-    
-    await db.collection('timePeriods').deleteOne({'_id': new ObjectId(id)})
-}
 
 export default verifyAdmin(async function timePeriod(req:NextApiRequest, res:NextApiResponse) {
 
