@@ -37,7 +37,7 @@ const initialValues = {
     image: ''
 }
 
-export default function AddTimePeriod({timePeriods, authors, genres, books}:Props) {
+export default function AddBook({timePeriods, authors, genres, books}:Props) {
 
     const [values, valuesDispatch] = useReducer(valuesReducer, initialValues)
 
@@ -48,24 +48,25 @@ export default function AddTimePeriod({timePeriods, authors, genres, books}:Prop
     const createBook = async () => {
         setLoading(true)
 
-        const {data: {book}, status} = await axios({
-            method: 'POST',
-            url: '/api/book',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {book}} = await axios({
+                method: 'POST',
+                url: '/api/book',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
+            setLoading(false)
 
-        setLoading(false)
-
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Book Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/book', [...books, book], false)
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return
         }
-        setMessage({type: 'success', content: 'Book Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/book', [...books, book], false)
     }
 
     const classes = useStyles()
