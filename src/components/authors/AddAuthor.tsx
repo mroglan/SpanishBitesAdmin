@@ -50,25 +50,25 @@ export default function AddAuthor({authors, timePeriods}:Props) {
     const createAuthor = async () => {
         setLoading(true)
 
-        const {data: {author}, status} = await axios({
-            method: 'POST',
-            url: '/api/author',
-            data: {
-                operation: 'create',
-                values
-            }
-        })
+        try {
+            const {data: {author}} = await axios({
+                method: 'POST',
+                url: '/api/author',
+                data: {
+                    operation: 'create',
+                    values
+                }
+            })
+            setLoading(false)
 
-        setLoading(false)
-
-        if(status !== 200) {
+            setMessage({type: 'success', content: 'Author Created'})
+            valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
+            mutate('/api/author', [...authors, author], false)
+        } catch(e) {
+            setLoading(false)
             setMessage({type: 'error', content: 'Error Saving'})
             return 
         }
-
-        setMessage({type: 'success', content: 'Author Created'})
-        valuesDispatch({type: 'CLEAR_VALUES', payload: {}})
-        mutate('/api/author', [...authors, author], false)
     }
 
     const classes = useStyles()
