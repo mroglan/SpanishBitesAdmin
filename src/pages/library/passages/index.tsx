@@ -5,7 +5,7 @@ import {getAllPassages} from '../../../utils/passages'
 import {ClientBook, ClientPassage} from '../../../database/dbInterfaces'
 import {ensureAuth} from '../../../utils/auth'
 
-import styles from '../../styles/Home.module.css'
+import styles from '../../../styles/Home.module.css'
 import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
