@@ -12,7 +12,7 @@ import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
 import Footer from '../../../components/nav/Footer'
-import Books from '../../../components/books/Books'
+import Books from '../../../components/library/books/Books'
 
 interface Props {
     authors: ClientAuthor[];

@@ -9,7 +9,7 @@ import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
 import Footer from '../../../components/nav/Footer'
-import TimePeriodsSection from '../../../components/timePeriods/TimePeriods'
+import TimePeriodsSection from '../../../components/library/timePeriods/TimePeriods'
 
 interface Props {
     timePeriods: ClientTimePeriod[];

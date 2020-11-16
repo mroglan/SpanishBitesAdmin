@@ -9,7 +9,7 @@ import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
 import Footer from '../../../components/nav/Footer'
-import GenresSection from '../../../components/genres/Genres'
+import GenresSection from '../../../components/library/genres/Genres'
 
 interface Props {
     genres: ClientGenre[];

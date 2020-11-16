@@ -10,7 +10,7 @@ import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
 import Footer from '../../../components/nav/Footer'
-import EditAuthors from '../../../components/authors/Authors'
+import EditAuthors from '../../../components/library/authors/Authors'
 
 interface Props {
     authors: ClientAuthor[];

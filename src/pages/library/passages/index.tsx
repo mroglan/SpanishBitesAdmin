@@ -10,7 +10,7 @@ import Header from '../../../components/nav/Header'
 import SideBar from '../../../components/nav/SideBar'
 import {libraryItems} from '../../../components/nav/navItems'
 import Footer from '../../../components/nav/Footer'
-import Passages from '../../../components/passages/Passages'
+import Passages from '../../../components/library/passages/Passages'
 
 interface Props {
     books: ClientBook[];
