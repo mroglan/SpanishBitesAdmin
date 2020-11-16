@@ -1,10 +1,10 @@
 
 export const libraryItems = [
-    {name: 'Time Periods', link: '/timeperiods'},
-    {name: 'Authors', link: '/authors'},
-    {name: 'Genres', link: '/genres'},
-    {name: 'Books', link: '/books'},
-    {name: 'Passages', link: '/passages'}
+    {name: 'Time Periods', link: '/library/timeperiods'},
+    {name: 'Authors', link: '/library/authors'},
+    {name: 'Genres', link: '/library/genres'},
+    {name: 'Books', link: '/library/books'},
+    {name: 'Passages', link: '/library/passages'}
 ]
 
 export const bitesItems = [
