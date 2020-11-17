@@ -26,6 +26,24 @@ export default function NavCards() {
     const classes = useStyles()
     return (
         <Grid container spacing={3} justify="space-around" alignItems="stretch">
+            <Grid item className={classes.gridItem}>
+                <Link href="/library">
+                    <a className={classes.link}>
+                        <Paper className={classes.paper}>
+                            <Box>
+                                <Typography color="inherit" variant="h5">
+                                    Library
+                                </Typography>
+                            </Box>
+                            <Box mt={2}>
+                                <Typography color="inherit" variant="body1">
+                                    Manage the time periods, authors, genres, books, and passages in the Spanish Bites Library!
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </a>
+                </Link>
+            </Grid>
             <Grid item className={classes.gridItem} >
                 <Link href="/blog">
                     <a className={classes.link}>
