@@ -4,7 +4,7 @@ import Header from '../../components/nav/Header'
 import SideBar from '../../components/nav/SideBar'
 import {libraryItems} from '../../components/nav/navItems'
 import Footer from '../../components/nav/Footer'
-import WelcomeMessage from '../../components/bites/WelcomeMessage'
+import WelcomeMessage from '../../components/library/WelcomeMessage'
 import {Box} from '@material-ui/core'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {ensureAuth} from '../../utils/auth'
@@ -25,7 +25,7 @@ export default function BitesHome() {
                 </aside>
                 <main className={styles.main}>
                     <Box>
-                        Welcome Message!
+                        <WelcomeMessage />
                     </Box>
                 </main>
                 <footer className={styles.footer}>
