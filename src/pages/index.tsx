@@ -19,16 +19,13 @@ export default function Home() {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header items={libraryItems} selectedIndex={-1} />
+                    <Header items={[]} selectedIndex={-1} />
                 </header>
-                <aside className={styles.sideBar}>
-                    <SideBar items={libraryItems} selectedIndex={-1} />
-                </aside>
-                <main className={styles.main}>
+                <main className={styles['full-main']}>
                     <Box>
                         <WelcomeMessage />
                     </Box>
-                    <Box maxWidth={700} mt={3} mx="auto">
+                    <Box maxWidth={1000} my={3} mx="auto">
                         <NavCards />
                     </Box>
                 </main>
