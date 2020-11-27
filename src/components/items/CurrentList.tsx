@@ -2,6 +2,7 @@ import {Box, List, ListItem, Grid, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {SearchInput} from './inputs'
 import {useState} from 'react'
+import {ignoreCapsAndAccentsRegex} from '../../utils/regex'
 
 const useStyles = makeStyles(theme => ({
     listItem: {
@@ -41,7 +42,7 @@ export default function CurrentList({items, onClick, selected}:Props) {
     const onSearch = (input:string) => {
         if(!input) setExcludeArray([])
         const newExcludes = []
-        const filter = new RegExp(input, 'i')
+        const filter = ignoreCapsAndAccentsRegex(input)
         items.forEach(({title}, i) => {
             if(title.match(filter)) return
             newExcludes.push(i)
