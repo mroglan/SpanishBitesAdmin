@@ -9,6 +9,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import {useState, useCallback, useMemo, Dispatch, useRef} from 'react'
 import {uploadImage} from '../../../utils/images'
+import TextModal from '../../forms/TextModal'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -38,6 +39,25 @@ const initialModalVals = {
 export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) {
 
     const imageRef = useRef<HTMLInputElement>()
+
+    const closeTextModal = () => {
+        setTextModalStates({...textModalStates, open: false})
+    }
+
+    const [textModalStates, setTextModalStates] = useState({
+        type: 'detailedInfo',
+        open: false,
+        onSave: (value?:string, config?) => {
+            closeTextModal()
+            if(!value) return
+            valuesDispatch({type: 'MODIFY_DETAILED_INFO', payload: value})
+        },
+        title: 'Modify Detailed Info'
+    })
+
+    const openTextModal = () => {
+        setTextModalStates({...textModalStates, open: true})
+    }
 
     const closeModal = useCallback(() => setModalStates({...modalStates, open: false}), [])
 
@@ -93,13 +113,6 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
             onSave: operation === 'create' ? addReference : modifyReference
         })
     }, [])
-
-    const influencesListItems = useMemo(() => {
-        return values.influences.map(({name, link}) => ({
-            title: name,
-            subtitle: link
-        }))
-    }, [values])
 
     const relevantWorksListItems = useMemo(() => {
         return values.relevantWorks.map(({name, link}) => ({
@@ -194,7 +207,6 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                 ))}
             </Box>
             <Divider />
-            <Divider />
             <Box my={1}>
                 <Box>
                     <Grid container spacing={1} wrap="nowrap" alignItems="center">
@@ -215,7 +227,14 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                     onEditClick={(i:number) => openModal('modify', 'relevantWorks', i)} />
                 </Box>
             </Box>
+            <Divider />
+            <Box my={1}>
+                <Button variant="outlined" onClick={() => openTextModal()}>
+                    Modify Detailed Info
+                </Button>
+            </Box>
             <ReferenceModal initialValues={initialValues} referenceStates={modalStates} />
+            <TextModal values={values} modalStates={textModalStates} />
         </form>
     )
 }
