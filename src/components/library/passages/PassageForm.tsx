@@ -4,7 +4,7 @@ import {ClientPassage, ClientBook, VocabWord} from '../../../database/dbInterfac
 import {SuccessIconButton, ErrorIconButton} from '../../items/buttons'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditList from '../../items/EditList'
-import TextModal from './TextModal'
+import TextModal from '../../forms/TextModal'
 import VocabModal from './VocabModal'
 import {useState, useCallback, useMemo, Dispatch, useRef} from 'react'
 
@@ -42,14 +42,16 @@ export default function PassageForm({values, valuesDispatch, books}:Props) {
             closeTextModal()
             if(!value) return
             valuesDispatch({type: 'MODIFY_VALUE', payload: {property: config.type, value}})
-        }
+        },
+        title: ''
     })
 
     const openTextModal = (type:string) => {
         setTextModalStates({
             ...textModalStates,
             open: true,
-            type
+            type,
+            title: type === 'englishText' ? 'Modify English Text' : type === 'spanishText' ? 'Modify Spanish Text' : 'Modify Commentary'
         })
     }
 
