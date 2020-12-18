@@ -54,6 +54,8 @@ export default function valuesReducer(state, {type, payload}:Action) {
             if(copy.keyPoints.length === 1) return
             copy.keyPoints.splice(payload.index, 1)
             return copy
+        case 'MODIFY_DETAILED_INFO':
+            return {...state, detailedInfo: payload}
         case 'CLEAR_VALUES':
             return initialValues
         case 'CHANGE_INITIAL_VALUES':
