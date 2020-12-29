@@ -61,22 +61,23 @@ export default function Header({selectedIndex, items}:Props) {
     return (
         <AppBar className={classes.appbar} position="sticky">
             <Toolbar className={classes.toolbar}>
-                <Grid container spacing={1} wrap="nowrap" alignItems="center">
-                    <Grid item>
-                        <div className={classes.logo}>
-                            Logo
-                        </div>
-                    </Grid>
-                    <Grid className={classes.title} item>
-                        <Link href="/">
-                            <a className={classes.link}>
+                <Link href="/">
+                    <a className={classes.link}>
+                        <Grid container spacing={1} wrap="nowrap" alignItems="center">
+                            <Grid item>
+                                <img src="/logo.svg" alt="Spanish Bites Logo" width="30px" height="30px" />
+                                {/*<div className={classes.logo}>
+                                    Logo
+                                </div>*/}
+                            </Grid>
+                            <Grid className={classes.title} item>
                                 <Typography variant="h5">
                                     Spanish Bites Admin
                                 </Typography>
-                            </a>
-                        </Link>
-                    </Grid>
-                </Grid>
+                            </Grid>
+                        </Grid>
+                    </a>
+                </Link>
                 <Box flexGrow={1} />
                 <Box>
                     {smallScreen && items.length ? <DrawerNav items={items} selectedIndex={selectedIndex} /> : <Button onClick={() => handleLogout()}>
