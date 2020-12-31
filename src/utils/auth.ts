@@ -49,7 +49,7 @@ export async function ensureNotAuth(ctx:GetServerSidePropsContext) {
 }
 
 export const verifyAdmin = (fn:NextApiHandler) => (req:NextApiRequest, res:NextApiResponse) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         jwt.verify(req.cookies.auth, process.env.SIGNATURE, async (err, decoded) => {
             if(err || !decoded) {
                 res.status(401).json({msg: 'Sorry, you are not authenticated'})
