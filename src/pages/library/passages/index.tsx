@@ -2,7 +2,8 @@ import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllBooks} from '../../../utils/books'
 import {getAllPassages} from '../../../utils/passages'
-import {ClientBook, ClientPassage} from '../../../database/dbInterfaces'
+import {getAllAuthors} from '../../../utils/authors'
+import {ClientBook, ClientPassage, ClientAuthor} from '../../../database/dbInterfaces'
 import {ensureAuth} from '../../../utils/auth'
 
 import styles from '../../../styles/Home.module.css'
@@ -15,9 +16,10 @@ import Passages from '../../../components/library/passages/Passages'
 interface Props {
     books: ClientBook[];
     passages: ClientPassage[];
+    authors: ClientAuthor[];
 }
 
-export default function Authors({books, passages}:Props) {
+export default function Authors({books, passages, authors}:Props) {
 
     return (
         <>  
@@ -32,7 +34,7 @@ export default function Authors({books, passages}:Props) {
                     <SideBar items={libraryItems} selectedIndex={4} />
                 </aside>
                 <main className={styles.main}>
-                    <Passages passages={passages} books={books} />
+                    <Passages authors={authors} passages={passages} books={books} />
                 </main>
                 <footer className={styles.footer}>
                     <Footer />
@@ -46,12 +48,13 @@ export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePro
 
     await ensureAuth(ctx)
 
-    const [books, passages] = await Promise.all([
-        getAllBooks(), getAllPassages()
+    const [books, passages, authors] = await Promise.all([
+        getAllBooks(), getAllPassages(), getAllAuthors()
     ])
 
     return {props: {
         books: JSON.parse(JSON.stringify(books)),
-        passages: JSON.parse(JSON.stringify(passages))
+        passages: JSON.parse(JSON.stringify(passages)),
+        authors: JSON.parse(JSON.stringify(authors))
     }}
 }
