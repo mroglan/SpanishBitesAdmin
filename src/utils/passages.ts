@@ -7,7 +7,9 @@ interface Values extends Omit<ClientPassage, '_id'> {}
 const objectifyValues = (values:Values) => {
     if(!values.book) return values
 
-    return {...values, book: new ObjectId(values.book)}
+    return {...values, book: new ObjectId(values.book),
+        authors: values.authors ? values.authors.map(author => new ObjectId(author)) : undefined
+    }
 }
 
 export const createPassage = async (values:Values) => {
