@@ -110,11 +110,13 @@ interface Passage {
 export interface DBPassage extends Passage {
     _id: ObjectId;
     book: ObjectId; 
+    authors?: ObjectId[];
 }
 
 export interface ClientPassage extends Passage {
     _id: string;
     book: string;
+    authors?: string[];
 }
 
 
