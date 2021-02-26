@@ -5,9 +5,8 @@ import {ObjectId} from 'mongodb'
 interface Values extends Omit<ClientPassage, '_id'> {}
 
 const objectifyValues = (values:Values) => {
-    if(!values.book) return values
 
-    return {...values, book: new ObjectId(values.book),
+    return {...values, book:values.book ? new ObjectId(values.book) : undefined,
         authors: values.authors ? values.authors.map(author => new ObjectId(author)) : undefined
     }
 }
