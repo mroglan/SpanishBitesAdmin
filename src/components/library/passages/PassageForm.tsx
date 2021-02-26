@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 import {Box, TextField, Grid, Typography, Divider, FormControl, InputLabel, Select, MenuItem, IconButton, Button} from '@material-ui/core'
-import {ClientPassage, ClientBook, VocabWord} from '../../../database/dbInterfaces'
+import {ClientPassage, ClientBook, VocabWord, ClientAuthor} from '../../../database/dbInterfaces'
 import {SuccessIconButton, ErrorIconButton} from '../../items/buttons'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditList from '../../items/EditList'
@@ -22,6 +22,7 @@ interface Props {
     values: Values;
     valuesDispatch: Dispatch<any>;
     books: ClientBook[];
+    authors: ClientAuthor[];
 }
 
 const blankVocabVals = {
@@ -29,7 +30,7 @@ const blankVocabVals = {
     def: ''
 }
 
-export default function PassageForm({values, valuesDispatch, books}:Props) {
+export default function PassageForm({values, valuesDispatch, books, authors}:Props) {
 
     const closeTextModal = () => {
         setTextModalStates({...textModalStates, open: false})
@@ -100,6 +101,14 @@ export default function PassageForm({values, valuesDispatch, books}:Props) {
         return values.vocab[index]
     }, [vocabModalStates]) 
 
+    const handleBookChange = (id:string) => {
+        valuesDispatch({type: 'MODIFY_VALUE', payload: {property: 'book', value: id}})
+        
+        const authorIds = books.find(book => book._id === id).authors
+
+        valuesDispatch({type: 'MODIFY_VALUE', payload: {property: 'authors', value: authorIds}})
+    }
+
     const classes = useStyles()
     return (
         <form>
@@ -111,7 +120,7 @@ export default function PassageForm({values, valuesDispatch, books}:Props) {
                 <FormControl variant="outlined" className={classes.textField}>
                     <InputLabel color="secondary" id="book-label">Book</InputLabel>
                     <Select labelId="book-label" value={values.book} label="Book" color="secondary"
-                    onChange={(e) => valuesDispatch({type: 'MODIFY_VALUE', payload: {property: 'book', value: e.target.value}})}>
+                    onChange={(e) => handleBookChange(e.target.value as string)}>
                         {books.map((book, index) => (
                             <MenuItem key={index} value={book._id}>{book.title}</MenuItem>
                         ))}
@@ -119,7 +128,18 @@ export default function PassageForm({values, valuesDispatch, books}:Props) {
                 </FormControl>
             </Box>
             <Box my={2}>
-                <TextField variant="outlined" color="secondary" label="Short Description" fullWidth
+                <FormControl variant="outlined" className={classes.textField}>
+                    <InputLabel color="secondary" id="author-label">Author</InputLabel>
+                    <Select labelId="author-label" value={values.authors || []} label="Author" color="secondary" multiple
+                    onChange={(e) => valuesDispatch({type: 'MODIFY_VALUE', payload: {property: 'authors', value: e.target.value}})} >
+                        {authors.map((author, i) => (
+                            <MenuItem key={i} value={author._id}>{author.firstName + ' ' + author.lastName}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Box>
+            <Box my={2}>
+                <TextField variant="outlined" color="secondary" label="Short Description" fullWidth multiline
                 value={values.desc} onChange={(e) => valuesDispatch({type: 'MODIFY_VALUE', payload: {property: 'desc', value: e.target.value}})} />
             </Box>
             <Divider />

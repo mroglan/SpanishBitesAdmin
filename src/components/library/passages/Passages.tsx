@@ -1,7 +1,7 @@
 import { Typography, Grid, Button, Box } from '@material-ui/core'
 import {SuccessButton, ErrorButton} from '../../items/buttons'
 import styles from '../../../styles/Editor.module.css'
-import {ClientBook, ClientPassage} from '../../../database/dbInterfaces'
+import {ClientBook, ClientPassage, ClientAuthor} from '../../../database/dbInterfaces'
 import {useReducer, useState, useMemo} from 'react'
 import useSWR from 'swr'
 
@@ -12,9 +12,10 @@ import ModifyPassage from './ModifyPassage'
 interface Props {
     books: ClientBook[];
     passages: ClientPassage[];
+    authors: ClientAuthor[];
 }
 
-export default function Passages({passages:dbPassages, books}:Props) {
+export default function Passages({passages:dbPassages, books, authors}:Props) {
 
     const [{operation, selectedPassage}, setAction] = useState({operation: 'add', selectedPassage: -1})
 
@@ -68,8 +69,8 @@ export default function Passages({passages:dbPassages, books}:Props) {
                 </Box>
             </section>
             <section className={styles.formContainer}>
-                {operation === 'add' ? <AddPassage books={books} passages={passages} /> : 
-                operation === 'modify' ? <ModifyPassage books={books} passages={passages} passageIndex={selectedPassage} /> : '' }
+                {operation === 'add' ? <AddPassage authors={authors} books={books} passages={passages} /> : 
+                operation === 'modify' ? <ModifyPassage authors={authors} books={books} passages={passages} passageIndex={selectedPassage} /> : '' }
             </section>
         </div>
     )

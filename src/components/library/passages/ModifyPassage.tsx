@@ -1,7 +1,7 @@
 import {Paper, Box, Typography, Grid} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {Dispatch, useState, useReducer, useMemo} from 'react'
-import {ClientBook} from '../../../database/dbInterfaces'
+import {ClientBook, ClientAuthor} from '../../../database/dbInterfaces'
 import PassageForm from './PassageForm'
 import {SuccessButton, ErrorButton} from '../../items/buttons'
 import SnackbarMessage from '../../items/SnackbarMessage'
@@ -22,11 +22,12 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
     books: ClientBook[];
+    authors: ClientAuthor[];
     passageIndex: number;
     passages: any;
 }
 
-export default function ModifyPassage({books, passageIndex, passages}:Props) {
+export default function ModifyPassage({books, passageIndex, passages, authors}:Props) {
 
     const [values, valuesDispatch] = useReducer(valuesReducer, passages[passageIndex])
 
@@ -115,7 +116,7 @@ export default function ModifyPassage({books, passageIndex, passages}:Props) {
                 </Typography>
             </Box>
             <Box mt={3}>
-                <PassageForm values={values} valuesDispatch={valuesDispatch} books={books} />
+                <PassageForm values={values} valuesDispatch={valuesDispatch} books={books} authors={authors} />
             </Box>
             <Box mt={3}>
                 <Grid container spacing={3}>

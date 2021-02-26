@@ -1,7 +1,7 @@
 import {Paper, Box, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {Dispatch, useState, useReducer} from 'react'
-import {ClientPassage, ClientBook} from '../../../database/dbInterfaces'
+import {ClientPassage, ClientBook, ClientAuthor} from '../../../database/dbInterfaces'
 import {SuccessButton} from '../../items/buttons'
 import SnackbarMessage from '../../items/SnackbarMessage'
 import axios from 'axios'
@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 interface Props {
     passages: ClientPassage[];
     books: ClientBook[];
+    authors: ClientAuthor[];
 }
 
 const initialValues = {
@@ -34,10 +35,11 @@ const initialValues = {
     spanishText: '',
     commentary: '',
     vocab: [],
-    annotations: ''
+    annotations: '',
+    authors: []
 }
 
-export default function AddPassage({passages, books}:Props) {
+export default function AddPassage({passages, books, authors}:Props) {
 
     const [values, valuesDispatch] = useReducer(valuesReducer, initialValues)
 
@@ -79,7 +81,7 @@ export default function AddPassage({passages, books}:Props) {
                 </Typography>
             </Box>
             <Box mt={3}>
-                <PassageForm values={values} valuesDispatch={valuesDispatch} books={books} />
+                <PassageForm values={values} valuesDispatch={valuesDispatch} books={books} authors={authors} />
             </Box>
             <Box mt={3}>
                 <SuccessButton disabled={loading} onClick={() => createPassage()} variant="outlined">
