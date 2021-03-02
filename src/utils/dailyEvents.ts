@@ -1,31 +1,52 @@
 import database from '../database/database'
 import {DBDailyEvent} from '../database/dbInterfaces'
 import {ObjectId} from 'mongodb'
+import {client} from '../database/fauna-db'
+import {query as q} from 'faunadb'
+import { object } from 'yup'
 
 interface Event {
     date: string;
     bite: string;
 }
 
-export const updateEvent = async (date:string, bite:string) => {
-    const db = await database()
+const objectifyValues = (values) => {
 
-    await db.collection('dailyEvents').updateOne({'date': new Date(date)}, {'$set': {'bite': new ObjectId(bite)}}, {upsert: true})
+    return {...values, bite: q.Ref(q.Collection('bites'), values.bite)}
+}
+
+export const createEvent = async (date, bite) => {
+    
+    await client.query(
+        q.Create(q.Collection('dailyEvents'), {data: {...objectifyValues({date, bite})}})
+    )
+}
+
+export const updateEvent = async (date:string, bite:string, id:string) => {
+
+    await client.query(
+        q.Update(q.Ref(q.Collection('dailyEvents'), id), {data: {...objectifyValues({date, bite})}})
+    )
 }
 
 export const insertManyEvents = async (events:Event[]) => {
     if(events.length === 0) return 
-    const dbEvents = events.map(event => ({date: new Date(event.date), bite: new ObjectId(event.bite)}))
 
-    const db = await database()
+    const objectVals = events.map(event => objectifyValues(event))
 
-    await db.collection('dailyEvents').insertMany(dbEvents)
+    await client.query(
+        q.Map(objectVals, q.Lambda(['event'], q.Create(q.Collection('dailyEvents'), {data: q.Var('event')})))
+    )
 }
 
 export const getAllDailyEvents = async () => {
-    const db = await database()
 
-    const events:DBDailyEvent[] = await db.collection('dailyEvents').find({}).toArray()
+    const events:any = await client.query(
+        q.Map(q.Paginate(q.Match(q.Index('all_dailyEvents')), {size: 10000}), (ref) => q.Get(ref))
+    )
 
-    return events
+    return events.data.map(d => ({
+        ...d.data, _id: d.ref.id,
+        bite: d.data.bite?.id || ''
+    }))
 }

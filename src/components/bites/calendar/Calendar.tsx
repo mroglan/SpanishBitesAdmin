@@ -24,7 +24,8 @@ export default function Calendar({bites, events:dbEvents}:Props) {
         return rawEvents.map(event => {
             return {date: new Date(event.date), 
             name: bites.find(bite => bite._id === event.bite)?.name,
-            bite: event.bite
+            bite: event.bite,
+            _id: event._id
             }
         }).sort((a, b) => a.date.getTime() - b.date.getTime())
     }, [rawEvents])
@@ -34,13 +35,15 @@ export default function Calendar({bites, events:dbEvents}:Props) {
     const closeModal = () => setModalStates({...modalStates, open: false})
 
     const updateCalendar = async (id:string, date:Date) => {
+        const event = events.find(event => dateFns.isSameDay(event.date, date))
         await axios({
             method: 'POST',
             url: '/api/dailyevent',
             data: {
-                operation: 'update',
+                operation: event ? 'update' : 'create',
                 date, 
-                bite: id
+                bite: id,
+                id: event ? event._id : ''
             }
         })
         trigger('/api/dailyevent')
