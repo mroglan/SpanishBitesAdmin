@@ -1,33 +1,39 @@
 import database from '../database/database'
 import {DBSpanishBite, ClientSpanishBite} from '../database/dbInterfaces'
 import {ObjectId} from 'mongodb'
+import {client} from '../database/fauna-db'
+import {query as q} from 'faunadb'
 
 interface Values extends Omit<ClientSpanishBite, '_id'> {}
 
 export const createBite = async (values:Values) => {
-    const db = await database()
 
-    const dbOperation = await db.collection('bites').insertOne(values)
+    const newBite:any = await client.query(
+        q.Create(q.Collection('bites'), {data: values})
+    )
 
-    return <DBSpanishBite>dbOperation.ops[0]
+    return {...newBite.data, _id: newBite.ref.id}
 }
 
 export const modifyBite = async (id:string, values:Values) => {
-    const db = await database()
 
-    await db.collection('bites').updateOne({'_id': new ObjectId(id)}, {'$set': {...values}})
+    await client.query(
+        q.Update(q.Ref(q.Collection('bites'), id), {data: values})
+    )
 }
 
 export const deleteBite = async (id:string) => {
-    const db = await database()
 
-    await db.collection('bites').deleteOne({'_id': new ObjectId(id)})
+    await client.query(
+        q.Delete(q.Ref(q.Collection('bites'), id))
+    )
 }
 
 export const getAllBites = async () => {
-    const db = await database()
 
-    const bites:DBSpanishBite[] = await db.collection('bites').find({}).sort({"name": 1}).toArray()
+    const bites:any = await client.query(
+        q.Map(q.Paginate(q.Match(q.Index('all_bites')), {size: 1000}), (ref) => q.Get(ref))
+    )
 
-    return bites
+    return bites.data.map(d => ({...d.data, _id: d.ref.id})).sort((a, b) => a.name.localeCompare(b.name))
 }   

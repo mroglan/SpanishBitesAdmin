@@ -5,10 +5,11 @@ import { getAllAuthors } from '../utils/authors'
 import { getAllGenres } from '../utils/genres'
 import { getAllBooks } from '../utils/books'
 import {getAllPassages} from '../utils/passages'
+import {getAllBites} from '../utils/bites'
 
-export default function PlayGround({timePeriods, authors, genres, books, passages}) {
+export default function PlayGround({timePeriods, authors, genres, books, passages, bites}) {
 
-    console.log(passages)
+    console.log(bites)
 
     const updateTimePeriods = async () => {
         try {
@@ -86,6 +87,21 @@ export default function PlayGround({timePeriods, authors, genres, books, passage
         }
     }
 
+    const updateBites = async () => {
+        try {
+            const {data} = await axios({
+                method: 'POST',
+                url: '/api/fauna/bites', 
+                data: {
+                    data: bites
+                }
+            })
+            console.log(data)
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
     return (
         <div>
             <button onClick={() => updateTimePeriods()}>
@@ -103,6 +119,9 @@ export default function PlayGround({timePeriods, authors, genres, books, passage
             <button onClick={() => updatePassages()}>
                 move passage data
             </button>
+            <button onClick={() => updateBites()}>
+                move bite data
+            </button>
         </div>
     )
 }
@@ -119,5 +138,9 @@ export const getServerSideProps:GetServerSideProps = async () => {
 
     // const passages = await getAllPassages()
 
-    return {props: {timePeriods: null, authors: null, genres: null, books: null, passages: null}}
+    // const bites = await getAllBites()
+
+    return {props: {timePeriods: null, authors: null, genres: null, books: null, passages: null,
+        bites: null
+    }}
 }
