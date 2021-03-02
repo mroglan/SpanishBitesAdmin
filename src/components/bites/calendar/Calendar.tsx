@@ -22,7 +22,7 @@ export default function Calendar({bites, events:dbEvents}:Props) {
 
     const events = useMemo(() => {
         return rawEvents.map(event => {
-            return {date: new Date(event.date), 
+            return {date: dateFns.parse(event.date, 'yyyy-MM-dd', new Date()), 
             name: bites.find(bite => bite._id === event.bite)?.name,
             bite: event.bite,
             _id: event._id
@@ -41,7 +41,7 @@ export default function Calendar({bites, events:dbEvents}:Props) {
             url: '/api/dailyevent',
             data: {
                 operation: event ? 'update' : 'create',
-                date, 
+                date: dateFns.format(date, 'yyyy-MM-dd'), 
                 bite: id,
                 id: event ? event._id : ''
             }
@@ -101,7 +101,7 @@ export default function Calendar({bites, events:dbEvents}:Props) {
             const newBiteId = unusedBiteIds[randomIndex]
 
             newEvents.push({
-                date: day,
+                date: dateFns.format(day, 'yyyy-MM-dd'),
                 bite: newBiteId
             })
 
