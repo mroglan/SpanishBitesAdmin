@@ -186,7 +186,7 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
                 {values.keyPoints.map((point, i) => (
                     <Grid container spacing={3} key={i} wrap="nowrap" alignItems="center">
                         <Grid item style={{flexGrow: 1}}>
-                            <TextField fullWidth variant="outlined" color="secondary" label={'Key Point ' + (i + 1)} 
+                            <TextField fullWidth variant="outlined" color="secondary" label={'Key Point ' + (i + 1)} multiline
                             value={point} onChange={(e) => valuesDispatch({type: 'MODIFY_KEY_POINT', payload: {index: i, value: e.target.value}})} />
                         </Grid>
                         <Grid item>
