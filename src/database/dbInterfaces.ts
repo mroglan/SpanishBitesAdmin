@@ -1,5 +1,3 @@
-import {ObjectId} from 'mongodb'
-
 
 export interface Event {
     title: string;
@@ -18,7 +16,7 @@ export interface TimePeriod {
 }
 
 export interface DBTimePeriod extends TimePeriod {
-    _id: ObjectId;
+    _id: string;
 }
 
 export interface ClientTimePeriod extends TimePeriod {
@@ -48,8 +46,8 @@ export interface Author {
 }
 
 export interface DBAuthor extends Author {
-    _id: ObjectId;
-    timePeriod: ObjectId;
+    _id: string;
+    timePeriod: string;
 }
 
 export interface ClientAuthor extends Author {
@@ -67,7 +65,7 @@ export interface ClientGenre extends Genre {
 }
 
 export interface DBGenre extends Genre {
-    _id: ObjectId;
+    _id: string;
 }
 
 
@@ -79,10 +77,10 @@ export interface Book {
 }
 
 export interface DBBook extends Book {
-    _id: ObjectId;
-    genres: ObjectId[]; 
-    authors: ObjectId[]; 
-    timePeriod: ObjectId;
+    _id: string;
+    genres: string[]; 
+    authors: string[]; 
+    timePeriod: string;
 }
 
 export interface ClientBook extends Book {
@@ -108,9 +106,9 @@ interface Passage {
 }
 
 export interface DBPassage extends Passage {
-    _id: ObjectId;
-    book: ObjectId; 
-    authors?: ObjectId[];
+    _id: string;
+    book: string; 
+    authors?: string[];
 }
 
 export interface ClientPassage extends Passage {
@@ -129,7 +127,7 @@ export interface User {
 }
 
 export interface DBUser extends User {
-    _id: ObjectId;
+    _id: string;
 }
 
 
@@ -144,7 +142,7 @@ export interface SpanishBite {
 }
 
 export interface DBSpanishBite extends SpanishBite {
-    _id: ObjectId;
+    _id: string;
 }
 
 export interface ClientSpanishBite extends SpanishBite {
@@ -154,8 +152,8 @@ export interface ClientSpanishBite extends SpanishBite {
 
 export interface DBDailyEvent {
     date: Date;
-    bite: ObjectId;
-    _id: ObjectId;
+    bite: string;
+    _id: string;
 }
 
 export interface ClientDailyEvent {
@@ -174,7 +172,7 @@ export interface BlogPost {
 }
 
 export interface DBBlogPost extends BlogPost {
-    _id: ObjectId;
+    _id: string;
 }
 
 export interface ClientBlogPost extends BlogPost {
