@@ -53,8 +53,6 @@ export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePro
 
         const id = Array.isArray(ctx.params.id) ? ctx.params.id[0] : ctx.params.id 
 
-        if(!isValidObjectId(id)) throw new Error('Invalid id')
-
         const post = await getBlogPost(id)
 
         return {props: {post: JSON.parse(JSON.stringify(post))}}
