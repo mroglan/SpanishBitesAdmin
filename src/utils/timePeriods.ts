@@ -1,6 +1,4 @@
-import database from '../database/database'
 import {DBTimePeriod, TimePeriod} from '../database/dbInterfaces'
-import {ObjectId} from 'mongodb'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 

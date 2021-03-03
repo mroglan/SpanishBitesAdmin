@@ -1,9 +1,6 @@
-import database from '../database/database'
 import {DBDailyEvent} from '../database/dbInterfaces'
-import {ObjectId} from 'mongodb'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
-import { object } from 'yup'
 
 interface Event {
     date: string;

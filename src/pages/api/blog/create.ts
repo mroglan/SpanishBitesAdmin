@@ -1,5 +1,4 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../../database/database'
 import {createBlogPost} from '../../../utils/blogPosts'
 import {verifyAdmin} from '../../../utils/auth'
 
