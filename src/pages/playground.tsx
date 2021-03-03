@@ -102,6 +102,21 @@ export default function PlayGround({timePeriods, authors, genres, books, passage
         }
     }
 
+    const checkUsername = async () => {
+        try {
+            const {data} = await axios({
+                method: 'POST',
+                url: '/api/fauna/finduser',
+                data: {
+                    username: 'mariacmelend@gmail.com'
+                }
+            })
+            console.log(data)
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
     return (
         <div>
             <button onClick={() => updateTimePeriods()}>
@@ -121,6 +136,9 @@ export default function PlayGround({timePeriods, authors, genres, books, passage
             </button>
             <button onClick={() => updateBites()}>
                 move bite data
+            </button>
+            <button onClick={() => checkUsername()}>
+                check username
             </button>
         </div>
     )

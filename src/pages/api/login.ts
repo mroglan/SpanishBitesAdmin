@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import database from '../../database/database'
-import {DBUser} from '../../database/dbInterfaces'
-import {ObjectId} from 'mongodb'
+import {client} from '../../database/fauna-db'
+import {query as q} from 'faunadb'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'
@@ -9,22 +8,27 @@ import cookie from 'cookie'
 export default async function login(req:NextApiRequest, res:NextApiResponse) {
 
     try {
-        const db = await database()
 
-        const user:DBUser = await db.collection('users').findOne({'username': req.body.username})
+        const user:any = await client.query(
+            q.If(
+                q.Exists(q.Match(q.Index('users_by_username'), req.body.username)),
+                q.Get(q.Match(q.Index('users_by_username'), req.body.username)),
+                null
+            )
+        )
 
         if(!user) {
             return res.status(403).json({msg: 'Username not found'})
         }
-        if(!user.isVerified) {
+        if(!user.data.isVerified) {
             return res.status(403).json({msg: 'User is not verified'})
         }
-        if(!user.isAdmin) {
+        if(!user.data.isAdmin) {
             return res.status(403).json({msg: 'You are not an Admin!'})
         }
 
         const match = await new Promise((resolve, reject) => {
-            bcrypt.compare(req.body.password, user.password, (err, result) => {
+            bcrypt.compare(req.body.password, user.data.password, (err, result) => {
                 if(err) reject(err)
                 resolve(result)
             })
@@ -35,10 +39,10 @@ export default async function login(req:NextApiRequest, res:NextApiResponse) {
         }
 
         const claims = {
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            isAdmin: user.isAdmin
+            _id: user.ref._id,
+            username: user.data.username,
+            email: user.data.email,
+            isAdmin: user.data.isAdmin
         }
 
         const token = jwt.sign(claims, process.env.SIGNATURE, {expiresIn: '48hr'})
