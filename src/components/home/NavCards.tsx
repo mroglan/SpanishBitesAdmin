@@ -80,6 +80,24 @@ export default function NavCards() {
                     </a>
                 </Link>
             </Grid>
+            <Grid item className={classes.gridItem}>
+                <Link href="/bookclub">
+                    <a className={classes.link}>
+                        <Paper className={classes.paper}>
+                            <Box>
+                                <Typography color="inherit" variant="h5">
+                                    Book Club
+                                </Typography>
+                            </Box>
+                            <Box mt={2}>
+                                <Typography color="inherit" variant="body1">
+                                    Set the content of the book club for each month.
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </a>
+                </Link>
+            </Grid>
         </Grid>
     )
 }
