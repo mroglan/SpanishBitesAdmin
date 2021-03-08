@@ -1,3 +1,4 @@
+import {query as q} from 'faunadb'
 
 export interface Event {
     title: string;
@@ -176,5 +177,23 @@ export interface DBBlogPost extends BlogPost {
 }
 
 export interface ClientBlogPost extends BlogPost {
+    _id: string;
+}
+
+
+export interface ClubEvent {
+    bookName: string;
+    bookAuthor: string;
+    bookDesc: string;
+    bookImage: string;
+    month: string;
+    year: string;
+}
+
+export interface DBClubEvent {
+    ref: typeof q.Ref;
+}
+
+export interface ClientClubEvent {
     _id: string;
 }
