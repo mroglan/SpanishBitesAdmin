@@ -13,7 +13,9 @@ export const getAllEvents = async () => {
         q.Map(q.Paginate(q.Match(q.Index('all_clubEvents'))), (ref) => q.Get(ref))
     )
 
-    return <DBClubEvent[]>events.data.map(d => ({...d.data, _id: d.ref.id}))
+    return <DBClubEvent[]>events.data.map(d => ({...d.data, _id: d.ref.id})).sort((a, b) => (
+        new Date(b.month + ' ' + b.year).getTime() - new Date(a.month + ' ' + a.year).getTime()
+    ))
 }
 
 export const getEvent = async ({month, year}:CreateEventValues) => {
