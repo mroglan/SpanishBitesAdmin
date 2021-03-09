@@ -1,8 +1,9 @@
 import {Box, Typography, Grid} from '@material-ui/core'
-import {SuccessButton, ErrorButton} from '../items/buttons'
+import {SuccessButton, ListBlueButton} from '../items/buttons'
 import {ClientClubEvent} from '../../database/dbInterfaces'
 import {useState} from 'react'
 import NewEventModal from './NewEventModal'
+import Link from 'next/link'
 
 interface Props {
     events: ClientClubEvent[];
@@ -31,7 +32,28 @@ export default function Main({events}:Props) {
                 </Grid>
             </Box>
             <Box mx="auto" maxWidth={700}>
-                list of book club events
+                <ul style={{listStyleType: 'none'}}>
+                    {events.map((event, i) => (
+                        <li style={{margin: '1rem 0'}} key={i}>
+                            <Link href="/bookclub/[year]/[month]" as={`/bookclub/${event.year}/${event.month}`}>
+                                <a style={{textDecoration: 'none'}}>
+                                    <ListBlueButton>
+                                        <Box>
+                                            <Typography variant="h4" gutterBottom>
+                                                {event.month} {event.year}
+                                            </Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography variant="body1">
+                                                {event.bookName}
+                                            </Typography>
+                                        </Box>
+                                    </ListBlueButton>
+                                </a>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             </Box>
             <NewEventModal open={openModal} setOpen={setOpenModal} />
         </Box>
