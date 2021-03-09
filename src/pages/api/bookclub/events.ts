@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import {getAllEvents, createEvent, verifyUniqueTime} from '../../../utils/clubEvents'
+import {getAllEvents, createEvent, verifyUniqueTime, updateEvent} from '../../../utils/clubEvents'
 import {verifyAdmin} from '../../../utils/auth'
 
 export default verifyAdmin(async function BookClubEvents(req:NextApiRequest, res:NextApiResponse) {
@@ -18,6 +18,11 @@ export default verifyAdmin(async function BookClubEvents(req:NextApiRequest, res
             if(!isUnique) return res.status(400).json({msg: 'Not unique'})
             const newEvent = await createEvent(values)
             return res.status(200).json({month: newEvent.month, year: newEvent.year})
+        }
+
+        if(operation === 'update') {
+            await updateEvent(values)
+            return res.status(200).json({msg: 'Successful update'})
         }
 
         return res.status(400).json({msg: 'Invalid request'})
