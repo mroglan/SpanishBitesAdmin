@@ -188,12 +188,14 @@ export interface ClubEvent {
     bookImage: string;
     month: string;
     year: string;
+    posts: typeof q.Ref[];
+    meetings: {date: string; users: typeof q.Ref[]}[];
 }
 
-export interface DBClubEvent {
+export interface DBClubEvent extends ClubEvent {
     ref: typeof q.Ref;
 }
 
-export interface ClientClubEvent {
+export interface ClientClubEvent extends ClubEvent {
     _id: string;
 }
