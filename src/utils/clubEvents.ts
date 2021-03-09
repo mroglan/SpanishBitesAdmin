@@ -1,4 +1,4 @@
-import {DBClubEvent} from '../database/dbInterfaces'
+import {DBClubEvent, ClientClubEvent} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -82,4 +82,15 @@ export const createEvent = async (values:CreateEventValues) => {
     )
     
     return {...newEvent.data, _id: newEvent.ref.id}
+}
+
+export const updateEvent = async (values:ClientClubEvent) => {
+    const copy = {...values}
+    delete copy._id 
+
+    await client.query(
+        q.Update(q.Ref(q.Collection('clubEvents'), values._id), {
+            data: copy
+        })
+    )
 }
