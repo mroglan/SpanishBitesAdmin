@@ -42,3 +42,19 @@ export const WarningIconButton = withStyles(theme => ({
     }
 }))(IconButton)
 
+
+export const ListBlueButton = withStyles(theme => ({
+    root: {
+        display: 'block',
+        background: 'hsla(229, 100%, 81%, .2)',
+        borderRadius: '10px',
+        width: '100%',
+        color: theme.palette.secondary.main,
+        padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
+        transition: 'color background 300ms',
+        '&:hover': {
+            color: theme.palette.secondary.main,
+            background: 'hsla(229, 100%, 81%, .3)'
+        }
+    }
+}))(Button)
