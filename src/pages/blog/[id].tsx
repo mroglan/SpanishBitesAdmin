@@ -56,7 +56,7 @@ export const getServerSideProps:GetServerSideProps = async (ctx:GetServerSidePro
 
         return {props: {post: JSON.parse(JSON.stringify(post))}}
     } catch(e) {
-        ctx.res.writeHead(500, {
+        ctx.res.writeHead(302, {
             Location: `${process.env.BASE_URL}/blog`
         })
         ctx.res.end()
