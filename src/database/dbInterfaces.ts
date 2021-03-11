@@ -124,7 +124,6 @@ export interface User {
     email: string;
     password: string;
     isAdmin: boolean;
-    isVerified: boolean;
 }
 
 export interface DBUser extends User {

@@ -20,9 +20,6 @@ export default async function login(req:NextApiRequest, res:NextApiResponse) {
         if(!user) {
             return res.status(403).json({msg: 'Username not found'})
         }
-        if(!user.data.isVerified) {
-            return res.status(403).json({msg: 'User is not verified'})
-        }
         if(!user.data.isAdmin) {
             return res.status(403).json({msg: 'You are not an Admin!'})
         }
