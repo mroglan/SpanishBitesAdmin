@@ -1,5 +1,10 @@
 import {query as q} from 'faunadb'
 
+interface Ref {
+    ref: typeof q.Collection;
+    id: string;
+}
+
 export interface Event {
     title: string;
     desc: string;
@@ -16,7 +21,13 @@ export interface TimePeriod {
     worldEvents: Event[];
 }
 
-export interface DBTimePeriod extends TimePeriod {
+export interface DBTimePeriod {
+    ref: Ref;
+    ts: number;
+    data: TimePeriod;
+}
+
+export interface OrganizedDBTimePeriod extends TimePeriod {
     _id: string;
 }
 
@@ -39,19 +50,40 @@ export interface Author {
     lastName: string;
     keyPoints: string[];
     relevantWorks: RelevantWork[];
-    influences: AuthorInfluence[];
     birthDate: string;
     deathDate: string;
     image: string;
-    detailedInfo: string; // PREMIUM ONLY
+    detailedInfo?: string; // PREMIUM ONLY
 }
 
-export interface DBAuthor extends Author {
+export interface DBUnpopulatedAuthor {
+    ref: Ref;
+    ts: number;
+    data: Author & {timePeriod: Ref}
+}
+
+export interface DBUnpopulatedOrganizedAuthor extends Author {
     _id: string;
-    timePeriod: string;
+    timePeriod: Ref;
+}
+
+export interface DBAuthor {
+    ref: Ref;
+    ts: number;
+    data: Author & {timePeriod: OrganizedDBTimePeriod}
+}
+
+export interface OrganizedDBAuthor extends Author {
+    _id: string;
+    timePeriod: OrganizedDBTimePeriod;
 }
 
 export interface ClientAuthor extends Author {
+    _id: string;
+    timePeriod: ClientTimePeriod;
+}
+
+export interface ClientUnpopulatedAuthor extends Author {
     _id: string;
     timePeriod: string;
 }
@@ -66,6 +98,12 @@ export interface ClientGenre extends Genre {
 }
 
 export interface DBGenre extends Genre {
+    ref: Ref;
+    ts: number;
+    data: Genre;
+}
+
+interface OrganizedDBGenre extends Genre {
     _id: string;
 }
 
@@ -77,14 +115,53 @@ export interface Book {
     detailedInfo: string; // PREMIUM ONLY
 }
 
-export interface DBBook extends Book {
+export interface DBUnpopulatedBook {
+    ref: Ref;
+    data: Book & {timePeriod: Ref; genres: Ref[]; authors: Ref[]};
+}
+
+export interface OrganizedDBAuthorPopulatedBook extends Book {
     _id: string;
-    genres: string[]; 
-    authors: string[]; 
-    timePeriod: string;
+    genres: Ref[];
+    timePeriod: Ref;
+    authors: OrganizedDBAuthor[];
+}
+
+export interface OrganizedDBGenreAndTimePeriodPopulatedBook extends Book {
+    _id: string;
+    genres: OrganizedDBGenre[];
+    timePeriod: OrganizedDBTimePeriod;
+    authors: Ref[];
+}
+
+export interface DBBook {
+    ref: Ref;
+    ts: number;
+    data: Book & {genres: OrganizedDBGenre[]; authors: OrganizedDBAuthor[]; timePeriod: OrganizedDBTimePeriod};
+}
+
+export interface OrganizedDBBook extends Book {
+    _id: string;
+    genres: OrganizedDBGenre[]; 
+    authors: OrganizedDBAuthor[]; 
+    timePeriod: OrganizedDBTimePeriod;
 }
 
 export interface ClientBook extends Book {
+    _id: string;
+    genres: ClientGenre[];
+    authors: ClientAuthor[];
+    timePeriod: ClientTimePeriod;
+}
+
+export interface AuthorPopulatedClientBook extends Book {
+    _id: string;
+    genres: string[];
+    authors: ClientAuthor[];
+    timePeriod: string;
+}
+
+export interface ClientUnpopulatedBook extends Book {
     _id: string;
     genres: string[];
     authors: string[];
@@ -101,33 +178,77 @@ interface Passage {
     desc: string;
     englishText: string;
     spanishText: string;
-    commentary: string;
+    commentary?: string; // PREMIUM ONLY
     vocab: VocabWord[];
-    annotations: string; // link to a pdf
+    annotations?: string; // PREMIUM ONLY
 }
 
-export interface DBPassage extends Passage {
+export interface DBPassage {
+    ref: Ref;
+    ts: number;
+    data: {book: DBUnpopulatedBook; }
+}
+
+export interface OrganizedDBPassage extends Passage {
     _id: string;
-    book: string; 
-    authors?: string[];
+    book: DBUnpopulatedBook; 
+    authors?: DBUnpopulatedOrganizedAuthor[];
+}
+
+export interface DBBookPopulatedPassage extends Passage {
+    _id: string;
+    book: OrganizedDBGenreAndTimePeriodPopulatedBook;
+    authors: DBUnpopulatedOrganizedAuthor[];
 }
 
 export interface ClientPassage extends Passage {
     _id: string;
-    book: string;
-    authors?: string[];
+    book: {_id: string; genres: string[]; authors: string[]; timePeriod: string; title: string; desc: string; image: string; detailedInfo: string;};
+    authors?: ClientUnpopulatedAuthor[];
+}
+
+export interface FullyPopulatedClientPassage extends Passage {
+    _id: string;
+    book: ClientBook;
+    authors?: ClientUnpopulatedAuthor[];
 }
 
 
+export interface GeneralItem {
+    type: string;
+    id: string;
+}
+
 export interface User {
     username: string;
+    name: string;
     email: string;
     password: string;
     isAdmin: boolean;
     isVerified: boolean;
+    premiumExpiration: string;
+    previews: GeneralItem[];
+    recentlyViewed: GeneralItem[];
+    image: string;
 }
 
-export interface DBUser extends User {
+export interface DBUser {
+    ref: Ref;
+    ts: number;
+    data: User;
+}
+
+export interface OrganizedDBUser extends User {
+    _id: string;
+}
+
+export interface ClientCookieUser {
+    username: string;
+    name: string;
+    email: string;
+    premiumExpeiration: string;
+    preview: GeneralItem[];
+    image: string;
     _id: string;
 }
 
@@ -142,7 +263,13 @@ export interface SpanishBite {
     dates: string[];
 }
 
-export interface DBSpanishBite extends SpanishBite {
+export interface DBSpanishBite {
+    ref: Ref;
+    ts: number;
+    data: SpanishBite;
+}
+
+export interface OrganizedDBSpanishBite extends SpanishBite {
     _id: string;
 }
 
@@ -151,32 +278,60 @@ export interface ClientSpanishBite extends SpanishBite {
 }
 
 
-export interface DBDailyEvent {
-    date: Date;
-    bite: string;
-    _id: string;
-}
-
-export interface ClientDailyEvent {
+export interface DailyEvent {
     date: string;
+}
+
+export interface DBDailyEvent {
+    ref: Ref;
+    ts: number;
+    data: DailyEvent & {bite: Ref};
+} 
+
+export interface OrganizedDBEvent extends DailyEvent {
+    _id: string;
+    bite: string;
+}
+
+export interface ClientDailyEvent extends DailyEvent {
     bite: string;
     _id: string;
 }
 
 
-export interface BlogPost {
-    title: string;
-    subtitle: string;
-    content: string;
-    releaseDate: string;
-    keyWords: string[];
+export interface VerificationToken {
+    token: string;
+    userInfo: {
+        name: string;
+        email: string;
+        password: string;
+    }
 }
 
-export interface DBBlogPost extends BlogPost {
+export interface DBVerificationToken {
+    ref: Ref;
+    ts: number;
+    data: VerificationToken;
+}
+
+export interface OrganizedDBVerificationToken extends VerificationToken {
     _id: string;
 }
 
-export interface ClientBlogPost extends BlogPost {
+
+export interface PasswordResetToken {
+    token: string;
+    email: string;
+    userId: string;
+}
+
+export interface DBPasswordResetToken {
+    ref: Ref;
+    ts: number;
+    data: PasswordResetToken;
+}
+
+export interface OrganizedDBPasswordResetToken extends PasswordResetToken {
     _id: string;
 }
 
@@ -188,14 +343,44 @@ export interface ClubEvent {
     bookImage: string;
     month: string;
     year: string;
-    posts: typeof q.Ref[];
-    meetings: {date: string; users: typeof q.Ref[]}[];
+    posts: Ref[];
+    meetings: {date: string; users: Ref[]}[];
 }
 
-export interface DBClubEvent extends ClubEvent {
-    ref: typeof q.Ref;
+export interface OrganizedDBClubEvent extends ClubEvent {
+    _id: string;
 }
 
 export interface ClientClubEvent extends ClubEvent {
     _id: string;
+}
+
+
+export interface Survey {
+    name: string;
+    responses: any[];
+}
+
+export interface DBSurvey {
+    ref: Ref;
+    ts: number;
+    data: Survey;
+}
+
+export interface ClientSurvey extends Survey {
+    _id: string;
+}
+
+
+export interface RecentlyViewedItem {
+    id: string;
+    type: string;
+}
+
+
+export interface ContactMessage {
+    name: string;
+    email: string;
+    type: string;
+    message: string;
 }
