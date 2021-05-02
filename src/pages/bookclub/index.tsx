@@ -8,6 +8,7 @@ import { ensureAuth } from '../../utils/auth'
 import {getAllEvents} from '../../utils/clubEvents'
 import {Box} from '@material-ui/core'
 import Main from '../../components/bookclub/Main'
+import {bookClubItems} from '../../components/nav/navItems'
 
 interface Props {
     events: ClientClubEvent[];
@@ -22,7 +23,7 @@ export default function BookClub({events}:Props) {
             </Head>
             <div className={styles.root}>
                 <header className={styles.header}>
-                    <Header items={[]} selectedIndex={0} />
+                    <Header items={bookClubItems} selectedIndex={-1} />
                 </header>
                 <main className={styles['full-main']}>
                     <Box maxWidth={900} mt={1} mx="auto">
