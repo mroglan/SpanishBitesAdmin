@@ -367,6 +367,10 @@ export interface DBSurvey {
     data: Survey;
 }
 
+export interface OrganizedDBSurvey extends Survey {
+    _id: string;
+}
+
 export interface ClientSurvey extends Survey {
     _id: string;
 }
