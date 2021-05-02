@@ -299,6 +299,23 @@ export interface ClientDailyEvent extends DailyEvent {
 }
 
 
+export interface BlogPost {
+    title: string;
+    subtitle: string;
+    content: string;
+    releaseDate: string;
+    keyWords: string[];
+}
+
+export interface OrganizedDBBlogPost extends BlogPost {
+    _id: string;
+}
+
+export interface ClientBlogPost extends BlogPost {
+    _id: string;
+}
+
+
 export interface VerificationToken {
     token: string;
     userInfo: {
