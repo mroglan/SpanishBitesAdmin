@@ -1,7 +1,7 @@
 import {Paper, Box, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {Dispatch, useState, useReducer} from 'react'
-import {ClientTimePeriod, ClientAuthor, ClientBook, ClientGenre} from '../../../database/dbInterfaces'
+import {ClientTimePeriod, ClientAuthor, ClientUnpopulatedBook, ClientGenre} from '../../../database/dbInterfaces'
 import {SuccessButton} from '../../items/buttons'
 import SnackbarMessage from '../../items/SnackbarMessage'
 import BookForm from './BookForm'
@@ -24,7 +24,7 @@ interface Props {
     timePeriods: ClientTimePeriod[];
     authors: ClientAuthor[];
     genres: ClientGenre[];
-    books: ClientBook[];
+    books: ClientUnpopulatedBook[];
 }
 
 const initialValues = {

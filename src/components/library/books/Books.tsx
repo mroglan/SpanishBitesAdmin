@@ -1,7 +1,7 @@
 import { Typography, Grid, Button, Box } from '@material-ui/core'
 import {SuccessButton, ErrorButton} from '../../items/buttons'
 import styles from '../../../styles/Editor.module.css'
-import {ClientTimePeriod, ClientBook, ClientAuthor, ClientGenre} from '../../../database/dbInterfaces'
+import {ClientTimePeriod, ClientUnpopulatedBook, ClientAuthor, ClientGenre} from '../../../database/dbInterfaces'
 import {useReducer, useState, useMemo} from 'react'
 import useSWR from 'swr'
 
@@ -13,7 +13,7 @@ interface Props {
     timePeriods: ClientTimePeriod[];
     authors: ClientAuthor[];
     genres: ClientGenre[];
-    books: ClientBook[];
+    books: ClientUnpopulatedBook[];
 }
 
 export default function TimePeriods({timePeriods, authors, genres, books:dbBooks}:Props) {
