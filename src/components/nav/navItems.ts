@@ -11,3 +11,7 @@ export const bitesItems = [
     {name: 'Edit Bites', link: '/bites/edit'},
     {name: 'Calendar', link: '/bites/calendar'}
 ]
+
+export const bookClubItems = [
+    {name: 'Intro Survey', link: '/bookclub/intro-survey'}
+]
