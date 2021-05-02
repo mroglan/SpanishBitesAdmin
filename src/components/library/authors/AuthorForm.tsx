@@ -98,9 +98,6 @@ export default function AuthorForm({values, valuesDispatch, timePeriods}:Props) 
         if(modalStates.type === 'create') {
             return initialModalVals
         }
-        if(modalStates.scope === 'influences') {
-            return values.influences[modalStates.selectedIndex]
-        }
         return values.relevantWorks[modalStates.selectedIndex]
     }, [modalStates])
 
