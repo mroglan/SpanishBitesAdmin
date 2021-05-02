@@ -4,7 +4,7 @@ import {getAllAuthors} from '../../../utils/authors'
 import {getAllTimePeriods} from '../../../utils/timePeriods'
 import {getAllBooks} from '../../../utils/books'
 import {getAllGenres} from '../../../utils/genres'
-import {ClientAuthor, ClientTimePeriod, ClientBook, ClientGenre} from '../../../database/dbInterfaces'
+import {ClientAuthor, ClientTimePeriod, ClientBook, ClientGenre, ClientUnpopulatedBook} from '../../../database/dbInterfaces'
 import {ensureAuth} from '../../../utils/auth'
 
 import styles from '../../../styles/Home.module.css'
@@ -17,7 +17,7 @@ import Books from '../../../components/library/books/Books'
 interface Props {
     authors: ClientAuthor[];
     timePeriods: ClientTimePeriod[];
-    books: ClientBook[];
+    books: ClientUnpopulatedBook[];
     genres: ClientGenre[];
 }
 

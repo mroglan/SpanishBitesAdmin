@@ -3,7 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import {getAllBooks} from '../../../utils/books'
 import {getAllPassages} from '../../../utils/passages'
 import {getAllAuthors} from '../../../utils/authors'
-import {ClientBook, ClientPassage, ClientAuthor} from '../../../database/dbInterfaces'
+import {ClientBook, ClientPassage, ClientAuthor, ClientUnpopulatedPassage} from '../../../database/dbInterfaces'
 import {ensureAuth} from '../../../utils/auth'
 
 import styles from '../../../styles/Home.module.css'
@@ -15,7 +15,7 @@ import Passages from '../../../components/library/passages/Passages'
 
 interface Props {
     books: ClientBook[];
-    passages: ClientPassage[];
+    passages: ClientUnpopulatedPassage[];
     authors: ClientAuthor[];
 }
 
