@@ -1,5 +1,4 @@
 import {Values} from '../components/blog/edit/PostForm'
-import {DBBlogPost} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 

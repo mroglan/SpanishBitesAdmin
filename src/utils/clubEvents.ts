@@ -1,4 +1,4 @@
-import {DBClubEvent, ClientClubEvent} from '../database/dbInterfaces'
+import {OrganizedDBClubEvent, ClientClubEvent} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -13,7 +13,7 @@ export const getAllEvents = async () => {
         q.Map(q.Paginate(q.Match(q.Index('all_clubEvents'))), (ref) => q.Get(ref))
     )
 
-    return <DBClubEvent[]>events.data.map(d => ({...d.data, _id: d.ref.id})).sort((a, b) => (
+    return <OrganizedDBClubEvent[]>events.data.map(d => ({...d.data, _id: d.ref.id})).sort((a, b) => (
         new Date(b.month + ' ' + b.year).getTime() - new Date(a.month + ' ' + a.year).getTime()
     ))
 }
