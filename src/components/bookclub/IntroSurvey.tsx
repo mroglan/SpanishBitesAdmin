@@ -9,6 +9,7 @@ interface Props {
 export default function IntroSurvey({survey}:Props) {
 
     const results:any = useMemo(() => {
+        if(!Array.isArray(survey.responses)) return []
         const response = survey.responses.reduce((totals, res) => {
             let name = res.values.bookName
             let author = null
