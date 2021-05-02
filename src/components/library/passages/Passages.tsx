@@ -1,7 +1,7 @@
 import { Typography, Grid, Button, Box } from '@material-ui/core'
 import {SuccessButton, ErrorButton} from '../../items/buttons'
 import styles from '../../../styles/Editor.module.css'
-import {ClientBook, ClientPassage, ClientAuthor} from '../../../database/dbInterfaces'
+import {ClientBook, ClientPassage, ClientAuthor, ClientUnpopulatedPassage} from '../../../database/dbInterfaces'
 import {useReducer, useState, useMemo} from 'react'
 import useSWR from 'swr'
 
@@ -11,7 +11,7 @@ import ModifyPassage from './ModifyPassage'
 
 interface Props {
     books: ClientBook[];
-    passages: ClientPassage[];
+    passages: ClientUnpopulatedPassage[];
     authors: ClientAuthor[];
 }
 

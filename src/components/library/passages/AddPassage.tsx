@@ -1,7 +1,7 @@
 import {Paper, Box, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {Dispatch, useState, useReducer} from 'react'
-import {ClientPassage, ClientBook, ClientAuthor} from '../../../database/dbInterfaces'
+import {ClientPassage, ClientBook, ClientAuthor, ClientUnpopulatedPassage} from '../../../database/dbInterfaces'
 import {SuccessButton} from '../../items/buttons'
 import SnackbarMessage from '../../items/SnackbarMessage'
 import axios from 'axios'
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface Props {
-    passages: ClientPassage[];
+    passages: ClientUnpopulatedPassage[];
     books: ClientBook[];
     authors: ClientAuthor[];
 }

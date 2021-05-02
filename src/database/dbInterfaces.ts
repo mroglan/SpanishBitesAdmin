@@ -213,6 +213,12 @@ export interface FullyPopulatedClientPassage extends Passage {
     authors?: ClientUnpopulatedAuthor[];
 }
 
+export interface ClientUnpopulatedPassage extends Passage {
+    _id: string;
+    book: string;
+    authors?: string[];
+}
+
 
 export interface GeneralItem {
     type: string;
