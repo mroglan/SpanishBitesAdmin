@@ -9,6 +9,7 @@ import {getAllEvents} from '../../utils/clubEvents'
 import {Box} from '@material-ui/core'
 import Main from '../../components/bookclub/Main'
 import {bookClubItems} from '../../components/nav/navItems'
+import SideBar from '../../components/nav/SideBar'
 
 interface Props {
     events: ClientClubEvent[];
@@ -25,7 +26,10 @@ export default function BookClub({events}:Props) {
                 <header className={styles.header}>
                     <Header items={bookClubItems} selectedIndex={-1} />
                 </header>
-                <main className={styles['full-main']}>
+                <aside className={styles.sideBar}>
+                    <SideBar selectedIndex={-1} items={bookClubItems} />
+                </aside>
+                <main className={styles['main']}>
                     <Box maxWidth={900} mt={1} mx="auto">
                         <Main events={events} />
                     </Box>
