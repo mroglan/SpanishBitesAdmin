@@ -103,7 +103,7 @@ export interface DBGenre extends Genre {
     data: Genre;
 }
 
-interface OrganizedDBGenre extends Genre {
+export interface OrganizedDBGenre extends Genre {
     _id: string;
 }
 
@@ -186,7 +186,7 @@ interface Passage {
 export interface DBPassage {
     ref: Ref;
     ts: number;
-    data: {book: DBUnpopulatedBook; }
+    data: Passage & {book: Ref; authors?: Ref[];}
 }
 
 export interface OrganizedDBPassage extends Passage {
@@ -313,6 +313,12 @@ export interface BlogPost {
     keyWords: string[];
 }
 
+export interface DBBlogPost {
+    ref: Ref;
+    ts: number;
+    data: BlogPost;
+}
+
 export interface OrganizedDBBlogPost extends BlogPost {
     _id: string;
 }
@@ -368,6 +374,12 @@ export interface ClubEvent {
     year: string;
     posts: Ref[];
     meetings: {date: string; users: Ref[]}[];
+}
+
+export interface DBClubEvent {
+    ref: Ref;
+    ts: number;
+    data: ClubEvent;
 }
 
 export interface OrganizedDBClubEvent extends ClubEvent {

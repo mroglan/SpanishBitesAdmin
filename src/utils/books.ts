@@ -1,4 +1,4 @@
-import {DBBook, ClientBook} from '../database/dbInterfaces'
+import {DBBook, ClientBook, DBUnpopulatedBook, ClientUnpopulatedBook} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -13,11 +13,11 @@ const objectifyValues = (values:Values) => {
     }
 }
 
-export const createBook = async (values:Values) => {
+export const createBook = async (values:Values):Promise<ClientUnpopulatedBook> => {
 
     const objectIdVals = objectifyValues(values)
 
-    const newBook:any = await client.query(
+    const newBook:DBUnpopulatedBook = await client.query(
         q.Create(q.Collection('books'), {data: objectIdVals})
     )
 
@@ -43,9 +43,9 @@ export const deleteBook = async (id:string) => {
     )
 }
 
-export const getAllBooks = async () => {
+export const getAllBooks = async ():Promise<ClientUnpopulatedBook[]> => {
 
-    const books:any = await client.query(
+    const books:{data: DBUnpopulatedBook[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_books')), {size: 1000}), (ref) => q.Get(ref))
     )
 

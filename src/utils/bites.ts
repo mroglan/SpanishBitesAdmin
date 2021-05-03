@@ -1,12 +1,12 @@
-import {DBSpanishBite, ClientSpanishBite} from '../database/dbInterfaces'
+import {DBSpanishBite, ClientSpanishBite, OrganizedDBSpanishBite} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
 interface Values extends Omit<ClientSpanishBite, '_id'> {}
 
-export const createBite = async (values:Values) => {
+export const createBite = async (values:Values):Promise<OrganizedDBSpanishBite> => {
 
-    const newBite:any = await client.query(
+    const newBite:DBSpanishBite = await client.query(
         q.Create(q.Collection('bites'), {data: values})
     )
 
@@ -27,9 +27,9 @@ export const deleteBite = async (id:string) => {
     )
 }
 
-export const getAllBites = async () => {
+export const getAllBites = async ():Promise<OrganizedDBSpanishBite[]> => {
 
-    const bites:any = await client.query(
+    const bites:{data: DBSpanishBite[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_bites')), {size: 1000}), (ref) => q.Get(ref))
     )
 

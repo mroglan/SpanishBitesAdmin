@@ -1,4 +1,4 @@
-import {DBPassage, ClientPassage} from '../database/dbInterfaces'
+import {DBPassage, ClientPassage, ClientUnpopulatedPassage} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -11,9 +11,9 @@ const objectifyValues = (values:Values) => {
     }
 }
 
-export const createPassage = async (values:Values) => {
+export const createPassage = async (values:Values):Promise<ClientUnpopulatedPassage> => {
 
-    const newPassage:any = await client.query(
+    const newPassage:DBPassage = await client.query(
         q.Create(q.Collection('passages'), {data: objectifyValues(values)})
     )
 
@@ -40,9 +40,9 @@ export const deletePassage = async (id:string) => {
     )
 }
 
-export const getAllPassages = async () => {
+export const getAllPassages = async ():Promise<ClientUnpopulatedPassage[]> => {
 
-    const passages:any = await client.query(
+    const passages:{data: DBPassage[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_passages')), {size: 1000}), (ref) => q.Get(ref))
     )
 

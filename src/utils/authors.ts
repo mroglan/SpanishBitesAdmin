@@ -1,4 +1,4 @@
-import {DBAuthor, Author} from '../database/dbInterfaces'
+import {DBAuthor, Author, OrganizedDBAuthor, DBUnpopulatedAuthor, ClientUnpopulatedAuthor} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -11,11 +11,11 @@ const objectifyValues = (values:Values) => {
     return {...values, timePeriod: q.Ref(q.Collection('timePeriods'), values.timePeriod)}
 }
 
-export const addAuthor = async (values:Values) => {
+export const addAuthor = async (values:Values):Promise<ClientUnpopulatedAuthor> => {
 
     const objectVals = objectifyValues(values)
 
-    const newAuthor:any = await client.query(
+    const newAuthor:DBUnpopulatedAuthor = await client.query(
         q.Create(q.Collection('authors'), {data: objectVals})
     )
 
@@ -40,7 +40,7 @@ export const deleteAuthor = async (id:string) => {
     )
 }
 
-export const getAllAuthors = async () => {
+export const getAllAuthors = async ():Promise<ClientUnpopulatedAuthor[]> => {
 
     const authors:any = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_authors')), {size: 1000}), (ref) => q.Get(ref))

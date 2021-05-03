@@ -1,4 +1,4 @@
-import {OrganizedDBClubEvent, ClientClubEvent} from '../database/dbInterfaces'
+import {OrganizedDBClubEvent, ClientClubEvent, DBClubEvent} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -18,9 +18,9 @@ export const getAllEvents = async () => {
     ))
 }
 
-export const getEvent = async ({month, year}:CreateEventValues) => {
+export const getEvent = async ({month, year}:CreateEventValues):Promise<OrganizedDBClubEvent> => {
 
-    const event:any = await client.query(
+    const event:DBClubEvent[] = await client.query(
         q.Let(
             {
                 yearRefs: q.Select(['data'], q.Paginate(q.Match(q.Index('clubEvents_by_year'), year))),
@@ -43,12 +43,12 @@ export const getEvent = async ({month, year}:CreateEventValues) => {
         )
     )
 
-    return event ? {...event[0].data, _id: event[0].ref.id} : event
+    return event ? {...event[0].data, _id: event[0].ref.id} : null
 }
 
-export const verifyUniqueTime = async ({year, month}:CreateEventValues) => {
+export const verifyUniqueTime = async ({year, month}:CreateEventValues):Promise<boolean> => {
 
-    const unique = await client.query(
+    const unique:boolean = await client.query(
         q.Let(
             {
                 yearRefs: q.Paginate(q.Match(q.Index('clubEvents_by_year'), year)),
@@ -75,11 +75,11 @@ export const verifyUniqueTime = async ({year, month}:CreateEventValues) => {
     return unique
 }
 
-export const createEvent = async (values:CreateEventValues) => {
+export const createEvent = async (values:CreateEventValues):Promise<OrganizedDBClubEvent> => {
 
     const data = {...values, bookName: '', bookAuthor: '', bookDesc: '', bookImage: '', posts: [], meetings: []}
 
-    const newEvent:any = await client.query(
+    const newEvent:DBClubEvent = await client.query(
         q.Create(q.Collection('clubEvents'), {data})
     )
     

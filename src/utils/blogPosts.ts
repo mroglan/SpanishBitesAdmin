@@ -1,6 +1,7 @@
 import {Values} from '../components/blog/edit/PostForm'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
+import {OrganizedDBBlogPost, DBBlogPost} from '../database/dbInterfaces'
 
 export const updateBlogPost = async (values:Values) => {
 
@@ -29,9 +30,9 @@ export const deleteBlogPost = async (id:string) => {
     )
 }
 
-export const getAllPosts = async () => {
+export const getAllPosts = async ():Promise<OrganizedDBBlogPost[]> => {
 
-    const posts:any = await client.query(
+    const posts:{data: DBBlogPost[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_blogPosts')), {size: 1000}), (ref) => q.Get(ref))
     )
 
@@ -40,9 +41,9 @@ export const getAllPosts = async () => {
     return sortedPosts
 }
 
-export const getBlogPost = async (id:string) => {
+export const getBlogPost = async (id:string):Promise<OrganizedDBBlogPost> => {
 
-    const post:any = await client.query(
+    const post:DBBlogPost = await client.query(
         q.Get(q.Ref(q.Collection('blogPosts'), id))
     )
 

@@ -1,4 +1,4 @@
-import {DBDailyEvent} from '../database/dbInterfaces'
+import {DBDailyEvent, ClientDailyEvent} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -36,9 +36,9 @@ export const insertManyEvents = async (events:Event[]) => {
     )
 }
 
-export const getAllDailyEvents = async () => {
+export const getAllDailyEvents = async ():Promise<ClientDailyEvent[]> => {
 
-    const events:any = await client.query(
+    const events:{data: DBDailyEvent[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_dailyEvents')), {size: 10000}), (ref) => q.Get(ref))
     )
 

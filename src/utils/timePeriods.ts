@@ -1,10 +1,10 @@
-import {DBTimePeriod, TimePeriod} from '../database/dbInterfaces'
+import {DBTimePeriod, TimePeriod, OrganizedDBTimePeriod} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
-export const addTimePeriod = async (values:TimePeriod) => {
+export const addTimePeriod = async (values:TimePeriod):Promise<OrganizedDBTimePeriod> => {
 
-    const newPeriod:any = await client.query(
+    const newPeriod:DBTimePeriod = await client.query(
         q.Create(q.Collection('timePeriods'), {data: values})
     )
 
@@ -27,9 +27,9 @@ export const deleteTimePeriod = async (id:string) => {
     )
 }
 
-export const getAllTimePeriods = async () => {
+export const getAllTimePeriods = async ():Promise<OrganizedDBTimePeriod[]> => {
 
-    const timePeriods:any = await client.query(
+    const timePeriods:{data: DBTimePeriod[]} = await client.query(
         q.Map(q.Paginate(q.Match(q.Index('all_timePeriods'))), (ref) => q.Get(ref))
     )
 
