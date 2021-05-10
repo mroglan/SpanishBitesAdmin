@@ -423,3 +423,17 @@ export interface ContactMessage {
     type: string;
     message: string;
 }
+
+export interface DBContactMessage {
+    ref: Ref;
+    ts: number;
+    data: ContactMessage;
+}
+
+export interface OrganizedDBContactMessage extends ContactMessage {
+    _id: string;
+}
+
+export interface ClientContactMessage extends ContactMessage {
+    _id: string;
+}
