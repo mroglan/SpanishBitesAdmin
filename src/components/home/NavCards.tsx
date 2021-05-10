@@ -98,6 +98,24 @@ export default function NavCards() {
                     </a>
                 </Link>
             </Grid>
+            <Grid item className={classes.gridItem}>
+                <Link href="/contact-messages">
+                    <a className={classes.link}>
+                        <Paper className={classes.paper}>
+                            <Box> 
+                                <Typography variant="h5" color="inherit">
+                                    Contact Messages
+                                </Typography>
+                            </Box>
+                            <Box mt={2}>
+                                <Typography color="inherit" variant="body1">
+                                    Review any messages sent by people from the website.
+                                </Typography>
+                            </Box>
+                        </Paper>
+                    </a>
+                </Link>
+            </Grid>
         </Grid>
     )
 }
