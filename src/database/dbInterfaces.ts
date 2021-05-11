@@ -422,6 +422,7 @@ export interface ContactMessage {
     email: string;
     type: string;
     message: string;
+    resolved?: boolean;
 }
 
 export interface DBContactMessage {
