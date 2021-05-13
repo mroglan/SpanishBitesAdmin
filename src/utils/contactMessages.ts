@@ -1,4 +1,4 @@
-import {DBContactMessage, OrganizedDBContactMessage} from '../database/dbInterfaces'
+import {DBContactMessage, OrganizedDBContactMessage, ContactMessage} from '../database/dbInterfaces'
 import {client} from '../database/fauna-db'
 import {query as q} from 'faunadb'
 
@@ -9,4 +9,13 @@ export const getAllContactMessages = async ():Promise<OrganizedDBContactMessage[
     )
 
     return msgs.data.map(msg => ({...msg.data, _id: msg.ref.id}))
+}
+
+export const updateMessage = async (id:string, values:ContactMessage) => {
+
+    await client.query(
+        q.Update(q.Ref(q.Collection('contactMessages'), id), {
+            data: values
+        })
+    )
 }
