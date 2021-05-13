@@ -19,3 +19,10 @@ export const updateMessage = async (id:string, values:ContactMessage) => {
         })
     )
 }
+
+export const deleteMessage = async (id:string) => {
+
+    await client.query(
+        q.Delete(q.Ref(q.Collection('contactMessages'), id))
+    )
+}
