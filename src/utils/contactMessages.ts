@@ -26,3 +26,10 @@ export const deleteMessage = async (id:string) => {
         q.Delete(q.Ref(q.Collection('contactMessages'), id))
     )
 }
+
+export const deleteMultipleMessages = async (ids:string[]) => {
+
+    await client.query(
+        q.Map(ids, id => q.Delete(q.Ref(q.Collection('contactMessages'), id)))
+    )
+}
